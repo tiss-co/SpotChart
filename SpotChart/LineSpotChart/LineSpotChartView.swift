@@ -4,7 +4,7 @@ import Charts
 public class LineSpotChartView: UIView {
     
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var lineChartView: LineChartView!
+    @IBOutlet public weak var lineChartView: LineChartView!
     @IBOutlet weak var leftAxisleadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftAxisLabel: UILabel!
     @IBOutlet weak var rightAxisLabel: UILabel!
@@ -12,6 +12,10 @@ public class LineSpotChartView: UIView {
     @IBOutlet weak var legendCollectionView: UICollectionView!
     
     @IBOutlet weak var tooltipView: UIView!
+    
+    public final class LineSpotChartViewFrameworkBundle {
+        public static let main: Bundle = Bundle(for: LineSpotChartViewFrameworkBundle.self)
+    }
     
     
     var data: [LineSpotChartModel] = [] {
@@ -46,7 +50,7 @@ public class LineSpotChartView: UIView {
     }
     
     func commonInit() {
-        Bundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
+        LineSpotChartViewFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
         contentView.fixInView(self)
     }
     
