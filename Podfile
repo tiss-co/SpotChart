@@ -1,15 +1,19 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'SpotChart' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+use_frameworks!
 
-  # Pods for SpotChart
-pod 'Charts'
-
-  target 'SpotChartTests' do
-    # Pods for testing
-  end
-
+def spotchart_pods
+    pod 'Charts'
 end
+
+target 'SpotChart' do
+    spotchart_pods
+end
+
+target 'SpotChartExample' do
+    spotchart_pods
+end
+
+
+

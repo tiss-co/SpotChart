@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7DFB36E00F50E5B886B0A5 /* Pods_SpotChartExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */; };
 		292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292C50D2260239EE003E28F3 /* CircleMarker.swift */; };
 		2969820126024C1900481490 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2969820026024C1900481490 /* Charts.framework */; };
 		297C060A25FF6080004467C1 /* SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297C060025FF6080004467C1 /* SpotChart.framework */; };
@@ -28,7 +29,6 @@
 		297C069425FF7E33004467C1 /* LineSpotChartProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C069325FF7E33004467C1 /* LineSpotChartProperties.swift */; };
 		297C06AD25FFA01E004467C1 /* LineSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */; };
 		297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06B82600CBF9004467C1 /* LegendModel.swift */; };
-		69D0D923D5446D5AEC463BB2 /* Pods_SpotChart_SpotChartTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A7E7BB5B9DFA563B0E8C268 /* Pods_SpotChart_SpotChartTests.framework */; };
 		7AB16EDCB4FEF04CEC2E7020 /* Pods_SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F18768680EFE169CE7A79B3 /* Pods_SpotChart.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,10 +92,10 @@
 		297C069325FF7E33004467C1 /* LineSpotChartProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpotChartProperties.swift; sourceTree = "<group>"; };
 		297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpotChartModel.swift; sourceTree = "<group>"; };
 		297C06B82600CBF9004467C1 /* LegendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendModel.swift; sourceTree = "<group>"; };
+		3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChartExample.release.xcconfig"; path = "Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample.release.xcconfig"; sourceTree = "<group>"; };
 		42BAB7BCCE26B56CC8CA6179 /* Pods-SpotChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart.release.xcconfig"; path = "Target Support Files/Pods-SpotChart/Pods-SpotChart.release.xcconfig"; sourceTree = "<group>"; };
-		6A7E7BB5B9DFA563B0E8C268 /* Pods_SpotChart_SpotChartTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpotChart_SpotChartTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D7581D61490AA5CC39E1FA6 /* Pods-SpotChart-SpotChartTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart-SpotChartTests.debug.xcconfig"; path = "Target Support Files/Pods-SpotChart-SpotChartTests/Pods-SpotChart-SpotChartTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D09BA34F235B6D1027240960 /* Pods-SpotChart-SpotChartTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart-SpotChartTests.release.xcconfig"; path = "Target Support Files/Pods-SpotChart-SpotChartTests/Pods-SpotChart-SpotChartTests.release.xcconfig"; sourceTree = "<group>"; };
+		4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpotChartExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9793C8A29BB9255784070CEA /* Pods-SpotChartExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChartExample.debug.xcconfig"; path = "Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample.debug.xcconfig"; sourceTree = "<group>"; };
 		DE9BB6D0C75C88996CA8E95B /* Pods-SpotChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart.debug.xcconfig"; path = "Target Support Files/Pods-SpotChart/Pods-SpotChart.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +114,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				297C060A25FF6080004467C1 /* SpotChart.framework in Frameworks */,
-				69D0D923D5446D5AEC463BB2 /* Pods_SpotChart_SpotChartTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7DFB36E00F50E5B886B0A5 /* Pods_SpotChartExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +252,7 @@
 				292C50E326023FCA003E28F3 /* Charts.framework */,
 				292C50E126023F95003E28F3 /* Charts.framework */,
 				0F18768680EFE169CE7A79B3 /* Pods_SpotChart.framework */,
-				6A7E7BB5B9DFA563B0E8C268 /* Pods_SpotChart_SpotChartTests.framework */,
+				4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,8 +262,8 @@
 			children = (
 				DE9BB6D0C75C88996CA8E95B /* Pods-SpotChart.debug.xcconfig */,
 				42BAB7BCCE26B56CC8CA6179 /* Pods-SpotChart.release.xcconfig */,
-				8D7581D61490AA5CC39E1FA6 /* Pods-SpotChart-SpotChartTests.debug.xcconfig */,
-				D09BA34F235B6D1027240960 /* Pods-SpotChart-SpotChartTests.release.xcconfig */,
+				9793C8A29BB9255784070CEA /* Pods-SpotChartExample.debug.xcconfig */,
+				3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -305,11 +305,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297C061725FF6080004467C1 /* Build configuration list for PBXNativeTarget "SpotChartTests" */;
 			buildPhases = (
-				D4840C55CD21F534431CA99A /* [CP] Check Pods Manifest.lock */,
 				297C060525FF6080004467C1 /* Sources */,
 				297C060625FF6080004467C1 /* Frameworks */,
 				297C060725FF6080004467C1 /* Resources */,
-				366E3685EC998F88A431D370 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -325,9 +323,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297C065625FF6424004467C1 /* Build configuration list for PBXNativeTarget "SpotChartExample" */;
 			buildPhases = (
+				8D8F3F44821643FFE2B2B6FC /* [CP] Check Pods Manifest.lock */,
 				297C062B25FF6422004467C1 /* Sources */,
 				297C062C25FF6422004467C1 /* Frameworks */,
 				297C062D25FF6422004467C1 /* Resources */,
+				118EED7569900EACEF3A5C50 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -491,24 +491,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		366E3685EC998F88A431D370 /* [CP] Embed Pods Frameworks */ = {
+		118EED7569900EACEF3A5C50 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SpotChart-SpotChartTests/Pods-SpotChart-SpotChartTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SpotChart-SpotChartTests/Pods-SpotChart-SpotChartTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SpotChart-SpotChartTests/Pods-SpotChart-SpotChartTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D4840C55CD21F534431CA99A /* [CP] Check Pods Manifest.lock */ = {
+		8D8F3F44821643FFE2B2B6FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -523,7 +523,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SpotChart-SpotChartTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SpotChartExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -798,7 +798,6 @@
 		};
 		297C061825FF6080004467C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8D7581D61490AA5CC39E1FA6 /* Pods-SpotChart-SpotChartTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -818,7 +817,6 @@
 		};
 		297C061925FF6080004467C1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D09BA34F235B6D1027240960 /* Pods-SpotChart-SpotChartTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -838,6 +836,7 @@
 		};
 		297C065725FF6424004467C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9793C8A29BB9255784070CEA /* Pods-SpotChartExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -857,6 +856,7 @@
 		};
 		297C065825FF6424004467C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

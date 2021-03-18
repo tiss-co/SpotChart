@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_SpotChart_SpotChartTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_SpotChart_SpotChartTestsVersionString[];
+FOUNDATION_EXPORT double Pods_SpotChartExampleVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_SpotChartExampleVersionString[];
 
