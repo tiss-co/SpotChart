@@ -13,8 +13,8 @@ public class LineSpotChartView: UIView {
     
     @IBOutlet weak var tooltipView: UIView!
     
-    public final class LineSpotChartViewFrameworkBundle {
-        public static let main: Bundle = Bundle(for: LineSpotChartViewFrameworkBundle.self)
+    public final class SpotChartFrameworkBundle {
+        public static let main: Bundle = Bundle(for: SpotChartFrameworkBundle.self)
     }
     
     
@@ -50,7 +50,7 @@ public class LineSpotChartView: UIView {
     }
     
     func commonInit() {
-        LineSpotChartViewFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
+        SpotChartFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
         contentView.fixInView(self)
     }
     
