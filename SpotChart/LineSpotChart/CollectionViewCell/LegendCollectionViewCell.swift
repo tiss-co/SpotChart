@@ -20,7 +20,7 @@ class LegendCollectionViewCell: UICollectionViewCell {
     func setupUI(backgroundColor: UIColor = .clear,
                  textColor: UIColor = .black,
                  textFont: UIFont = .systemFont(ofSize: 16),
-                 legendShape: LengendStatusShape
+                 legendShape: LengendStatusShapeEnum
                  ){
         self.backgroundColor = backgroundColor
         titleLabel.textColor = textColor
@@ -28,27 +28,30 @@ class LegendCollectionViewCell: UICollectionViewCell {
         setupLengendShape(legendShape: legendShape)
     }
     
-    func setupLengendShape(legendShape: LengendStatusShape){
+    func setupLengendShape(legendShape: LengendStatusShapeEnum){
         switch legendShape {
         case .circle:
             legendStatusHeightConstraint.constant = legendStatusView.frame.width
+            legendStatusView.layer.cornerRadius = legendStatusView.frame.height / 2
         case .rectangle:
             legendStatusHeightConstraint.constant = legendStatusView.frame.width / 4
+            legendStatusView.layer.cornerRadius = 0
         case .square:
             legendStatusHeightConstraint.constant = legendStatusView.frame.width
+            legendStatusView.layer.cornerRadius = legendStatusView.frame.height / 4
         }
-        legendStatusView.layer.cornerRadius = legendStatusView.frame.height / 2
     }
 }
 
 extension LegendCollectionViewCell {
     class func register(for collectionView: UICollectionView) {
-        collectionView.register(UINib(nibName: LegendCollectionViewCell.nameOfClass, bundle: Bundle.main),
+        collectionView.register(UINib(nibName: LegendCollectionViewCell.nameOfClass,
+                                      bundle: SpotChartFrameworkBundle.main),
                                 forCellWithReuseIdentifier:  LegendCollectionViewCell.nameOfClass)
     }
 }
 
-public enum LengendStatusShape {
+public enum LengendStatusShapeEnum {
     case circle
     case rectangle
     case square

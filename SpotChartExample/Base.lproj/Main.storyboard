@@ -16,12 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vtJ-nK-vtT" customClass="LineSpotChartView" customModule="SpotChart">
-                                <rect key="frame" x="20" y="248" width="374" height="400"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vtJ-nK-vtT" customClass="LineSpotChartView" customModule="SpotChart">
+                                <rect key="frame" x="0.0" y="258" width="414" height="380"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="phH-tp-Uae"/>
-                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spot Chart" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NpP-My-GTD">
                                 <rect key="frame" x="128" y="64" width="158" height="36"/>
@@ -31,13 +28,13 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
                             <constraint firstItem="NpP-My-GTD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="10j-qB-uZY"/>
-                            <constraint firstItem="vtJ-nK-vtT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="73O-Fe-xWQ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vtJ-nK-vtT" secondAttribute="trailing" constant="20" id="D6Z-6Q-6uG"/>
+                            <constraint firstItem="vtJ-nK-vtT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GsI-ip-3A4"/>
+                            <constraint firstItem="vtJ-nK-vtT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Nbh-zi-PKe"/>
                             <constraint firstItem="NpP-My-GTD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="X8I-3M-I6a"/>
-                            <constraint firstItem="vtJ-nK-vtT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="hrA-pj-UFG"/>
+                            <constraint firstItem="vtJ-nK-vtT" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="bnJ-bg-ge1"/>
                         </constraints>
                     </view>
                     <connections>
@@ -52,6 +49,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

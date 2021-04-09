@@ -1,9 +1,19 @@
 import Foundation
 import Charts
 
-struct LineSpotChartModel {
-    var legend: LegendModel
-    var properties: LineSpotChartProperties
-    var data: LineChartDataSet
-    var step: Int = 1
+public struct LineSpotChartModel {
+    public var legend: LegendModel
+    public var data: LineChartDataSet
+    public var startDate: Date?
+    public var endDate: Date?
+    public var step: Int
+    public var isRoundedValue: Bool = true
+    
+    public init(legend: LegendModel,
+                data: LineChartDataSet,
+                step: Int = 1){
+        self.legend = legend
+        self.data = data
+        self.step = step
+    }
 }

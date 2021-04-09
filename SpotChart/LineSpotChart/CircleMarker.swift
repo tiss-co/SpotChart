@@ -8,7 +8,7 @@
 import Foundation
 import Charts
 
-class CircleMarker: MarkerImage {
+public class CircleMarker: MarkerImage {
     
     @objc var color: UIColor
     @objc var radius: CGFloat = 5
@@ -18,7 +18,7 @@ class CircleMarker: MarkerImage {
         super.init()
     }
     
-    override func draw(context: CGContext, point: CGPoint) {
+    public override func draw(context: CGContext, point: CGPoint) {
         let circleRect = CGRect(x: point.x - radius, y: point.y - radius, width: radius * 2, height: radius * 2)
         context.setFillColor(color.cgColor)
         context.fillEllipse(in: circleRect)

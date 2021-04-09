@@ -1,57 +1,146 @@
 import UIKit
 import Charts
 
-public class LineSpotChartView: UIView {
+public final class SpotChartFrameworkBundle {
+    public static let main: Bundle = Bundle(for: SpotChartFrameworkBundle.self)
+}
+
+public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet public weak var lineChartView: LineChartView!
+    @IBOutlet weak var lineChartViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftAxisleadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftAxisLabel: UILabel!
     @IBOutlet weak var rightAxisLabel: UILabel!
     @IBOutlet weak var rightAxisTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var legendCollectionView: UICollectionView!
-    
+    @IBOutlet weak var legendCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipView: UIView!
+    @IBOutlet weak var tooltipStackView: UIStackView!
+    @IBOutlet weak var tooltipRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     
-    public final class SpotChartFrameworkBundle {
-        public static let main: Bundle = Bundle(for: SpotChartFrameworkBundle.self)
+    
+    public var data: [LineSpotChartModel] = [] {
+        didSet {
+            if let start = data.first?.startDate , let end = data.first?.endDate {
+                xValues = createXAxis(startDate: start, endDate: end)
+            }
+            reloadChart()
+        }
     }
     
-    
-    var data: [LineSpotChartModel] = [] {
+    public var lineChartViewHeight: CGFloat = 300.0 {
         didSet {
-            
+            self.lineChartViewHeightConstraint.constant = lineChartViewHeight
+            self.setNeedsLayout()
+        }
+    }
+    
+    public var leftAxisTitleFont: UIFont = UIFont.systemFont(ofSize: 12) {
+        didSet {
+            self.leftAxisLabel.font = leftAxisTitleFont
+        }
+    }
+    
+    public var rightAxisTitleFont: UIFont = UIFont.systemFont(ofSize: 12) {
+        didSet {
+            self.rightAxisLabel.font = rightAxisTitleFont
+        }
+    }
+    
+    public var leftAxisValueFont: UIFont = UIFont.systemFont(ofSize: 10) {
+        didSet {
+            setupAxisFormatter()
+        }
+    }
+    
+    public var rightAxisValueFont: UIFont = UIFont.systemFont(ofSize: 10){
+        didSet {
+            setupAxisFormatter()
+        }
+    }
+    
+    public var bottomAxisValueFont: UIFont = UIFont.systemFont(ofSize: 10){
+        didSet {
+            setupAxisFormatter()
         }
     }
     
     //MARK:- Tooltip section properties
     private var tooltipStackViewTag: Int = 666333
-    var tooltipTextColor: UIColor = .black
-    var tooltipBackgroundColor: UIColor = UIColor.lightGray.withAlphaComponent(0.6)
-    var tooltipItemsSpacing: CGFloat = 8
-    var tootTipItemsUnit: String = "MW"
-    var tooltipTitleFont: UIFont = UIFont.systemFont(ofSize: 12)
-    var tooltipValueFont: UIFont = UIFont.systemFont(ofSize: 10)
-    var tooltipUnitFont: UIFont = UIFont.systemFont(ofSize: 8)
+    public var tooltipBackgroundColor: UIColor = UIColor.lightGray.withAlphaComponent(0.6) {
+        didSet {
+            self.tooltipView.backgroundColor = tooltipBackgroundColor
+        }
+    }
     
+    public var tooltipWidth: CGFloat = 140 {
+        didSet {
+            tooltipWidthConstraint.constant = tooltipWidth
+        }
+    }
+    
+    public var tooltipPadding: CGFloat = 60.0
+    public var tooltipTextColor: UIColor = .black
+    public var tooltipItemsSpacing: CGFloat = 8
+    public var tootTipItemsUnit: String = ""
+    public var tooltipTitleFont: UIFont = UIFont.systemFont(ofSize: 13)
+    public var tooltipValueFont: UIFont = UIFont.systemFont(ofSize: 11)
+    public var tooltipUnitFont: UIFont = UIFont.systemFont(ofSize: 10)
+    
+    public var fullDateFormat: String = "d.MMM HH:mm a"
+    public var dayAxisLabelFormat: String = "d.MMM"
+    public var hourAxisLabelFormat: String = "HH:mm"
+    
+    public var legendTitleFont: UIFont = UIFont.systemFont(ofSize: 13) {
+        didSet {
+            self.legendCollectionView.layoutSubviews()
+        }
+    }
+    
+    public var legendTitleColor: UIColor = UIColor.black {
+        didSet {
+            self.legendCollectionView.layoutSubviews()
+        }
+    }
+    
+    public var xValues : [String] = [] {
+        didSet {
+            lineChartView.xAxis.valueFormatter = xValues.isEmpty ? nil : self
+        }
+    }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
         setAxisTitle()
+        setupAxisFormatter()
         setupCollectionView()
+        setupRemovedTooltipGesture()
+        setupUI()
+        setupLineChartDelegate()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
         setAxisTitle()
+        setupAxisFormatter()
         setupCollectionView()
+        setupRemovedTooltipGesture()
+        setupUI()
+        setupLineChartDelegate()
     }
     
     func commonInit() {
         SpotChartFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
         contentView.fixInView(self)
+    }
+    
+    func setupLineChartDelegate(){
+        lineChartView.delegate = self
     }
     
     func setupCollectionView(){
@@ -61,6 +150,11 @@ public class LineSpotChartView: UIView {
     }
     
     func setupUI(){
+        self.tooltipView.layer.cornerRadius = 8
+        self.tooltipView.backgroundColor = tooltipBackgroundColor.withAlphaComponent(0.6)
+        self.tooltipStackView.backgroundColor = .clear
+        self.rightAxisLabel.font = rightAxisTitleFont
+        self.leftAxisLabel.font = leftAxisTitleFont
         
     }
     
@@ -70,90 +164,90 @@ public class LineSpotChartView: UIView {
         self.layoutIfNeeded()
         self.leftAxisLabel.transform = CGAffineTransform.identity
         self.rightAxisLabel.transform = CGAffineTransform.identity
-
+        
         leftAxisleadingConstraint.constant = -(self.leftAxisLabel.bounds.width/2) + 10
         rightAxisTrailingConstraint.constant = -(self.rightAxisLabel.bounds.width/2) + 10
         leftAxisLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         rightAxisLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
     }
     
-    func setTooltip(index : Int){
-        var stackViews : [UIView] = []
+    func setupAxisFormatter(){
+        let sideAxisFormatter = NumberFormatter()
+        sideAxisFormatter.numberStyle = .decimal
+        sideAxisFormatter.groupingSeparator = ","
         
-        let timeLbl = UILabel()
-        timeLbl.font = tooltipTitleFont
-        timeLbl.textColor = tooltipTextColor
-        timeLbl.textAlignment = .left
+        let leftAxis = lineChartView.leftAxis
+        leftAxis.labelFont = leftAxisValueFont
+        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: sideAxisFormatter)
+        leftAxis.labelPosition = .outsideChart
         
-//        if let startDate = startDate ?? Date().convertToLocalTime(fromTimeZone: "EST") {
-//            timeLbl.text = findDateAndTime(start: startDate, index: index/5)
-//        }else{
-//            timeLbl.text = ""
-//        }
+        let rightAxis = lineChartView.rightAxis
+        rightAxis.enabled = true
+        rightAxis.labelFont = rightAxisValueFont
+        rightAxis.valueFormatter = DefaultAxisValueFormatter(formatter: sideAxisFormatter)
+        leftAxis.labelPosition = .outsideChart
         
-        stackViews.append(timeLbl)
-        
-        for i in data{
-            if i.data.entries.count > index/i.step && i.legend.isEnable{
-                let titleLbl = UILabel()
-                titleLbl.font = tooltipTitleFont
-                titleLbl.textColor = tooltipTextColor
-                titleLbl.textAlignment = .left
-                titleLbl.text = i.legend.key + ": "
-                let valueLbl = UILabel()
-                valueLbl.font = tooltipTitleFont
-                valueLbl.textColor = tooltipTextColor
-                valueLbl.textAlignment = .right
-                
-//                if i.0 == FACILITY_CHART_KEY {
-//                    valueLbl.text = String(format: "%.2f",i.1.entries[index/i.3].y)
-//                }else{
-//                    valueLbl.text = String(Int(i.1.entries[index/i.3].y.rounded()).thousandSeprate()!)
-//                }
-                let unitLabel = UILabel()
-                unitLabel.font = tooltipTitleFont
-                unitLabel.textColor = tooltipTextColor
-                unitLabel.textAlignment = .left
-                unitLabel.text = tootTipItemsUnit
-                unitLabel.widthAnchor.constraint(equalToConstant: 15).isActive = true
-                let vStack = UIStackView(arrangedSubviews: [titleLbl,valueLbl,unitLabel])
-                vStack.distribution = .fill
-                stackViews.append(vStack)
-            }else{
-                continue
-            }
-        }
-        DispatchQueue.main.async { [self] in
-            removeTooltipSubviews()
-            if stackViews.count == 0{
-                return
-            }else{
-                tooltipView.isHidden = false
-            }
-            let vStack = UIStackView(arrangedSubviews: stackViews)
-            vStack.tag = tooltipStackViewTag
-            vStack.axis = .vertical
-            vStack.spacing = tooltipItemsSpacing
-            vStack.distribution = .fillEqually
-            vStack.topAnchor.constraint(equalTo: tooltipView.topAnchor).isActive = true
-            vStack.topAnchor.constraint(equalTo: tooltipView.topAnchor).isActive = true
-            vStack.topAnchor.constraint(equalTo: tooltipView.topAnchor).isActive = true
-            vStack.topAnchor.constraint(equalTo: tooltipView.topAnchor).isActive = true
-            tooltipView.addSubview(vStack)
-        }
+        let bottomAxis = lineChartView.xAxis
+        bottomAxis.enabled = true
+        bottomAxis.labelFont = bottomAxisValueFont
+        bottomAxis.valueFormatter = bottomAxis.valueFormatter
     }
     
-    func removeTooltipSubviews(){
-        tooltipView.isHidden = true
-        for i in tooltipView.subviews {
-            if i == viewWithTag(tooltipStackViewTag){
-                i.removeFromSuperview()
-            }
+    func findDateAndTime(start : Date, index : Int, step: Int)->String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dayAxisLabelFormat
+        
+        let newFormatter = DateFormatter()
+        newFormatter.dateFormat = fullDateFormat
+        
+        let sDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: start)
+        
+        let day = index/1440
+        let minute = (index - (day * 1440))
+        
+        guard let newDate = Calendar.current.date(byAdding: .day, value: day, to: sDate!) else { return ""}
+        if minute == 0 {
+            let dateString = dateFormatter.string(from: newDate)
+            return dateString
         }
+        guard let newDateWithMinute = Calendar.current.date(byAdding: .minute, value: minute, to: newDate) else { return ""}
+        
+        let dateString = newFormatter.string(from: newDateWithMinute)
+        return dateString
+    }
+    
+    //MARK: - Found x value data
+    func createXAxis(startDate: Date, endDate: Date) -> [String] {
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = dayAxisLabelFormat
+        let hourFormatter = DateFormatter()
+        hourFormatter.dateFormat = hourAxisLabelFormat
+        var start = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: startDate) ?? startDate
+        let end = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: endDate) ?? endDate
+        let components = Calendar.current.dateComponents([.day], from: start, to: end)
+        var dates: [String] = []
+        var index = 0
+        while start <= end {
+            if components.day == 1 {
+                guard let newDate = Calendar.current.date(byAdding: .minute, value: 5, to: start) else { break }
+                if index % 288 == 0{
+                    dates.append(monthFormatter.string(from: start))
+                }else{
+                    dates.append(hourFormatter.string(from: start))
+                }
+                start = newDate
+            }else{
+                guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: start) else { break }
+                dates.append(monthFormatter.string(from: start))
+                start = newDate
+            }
+            index += 1
+        }
+        return dates
     }
 }
 
-extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate{
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
@@ -162,35 +256,236 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
         let legend = data[indexPath.row].legend
-        cell.setupUI(backgroundColor: .clear, textColor: .black, textFont: .systemFont(ofSize: 14), legendShape: .circle)
+        cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.toolTipBgView.isHidden = true
-//        self.chartView.highlightValue(nil)
+        self.tooltipView.isHidden = true
+        self.lineChartView.highlightValue(nil)
         data[indexPath.row].legend.isEnable = !data[indexPath.row].legend.isEnable
-        legendCollectionView.reloadData()
+        reloadChart()
+    }
+    
+    func reloadChart(){
+        let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
+        let data = LineChartData(dataSets: dataSets)
+        data.setDrawValues(false)
+        DispatchQueue.main.async {[self] in
+            lineChartView.data = data
+            self.legendCollectionView.reloadData()
+            let legendCollectionViewHeight = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+            legendCollectionViewHeightConstraint.constant = legendCollectionViewHeight
+            self.setNeedsLayout()
+        }
     }
 }
 
 
-extension LineSpotChartView {
+extension LineSpotChartView : ChartViewDelegate{
     //MARK: - chart selected
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+    public func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        if highlight.xPx > self.frame.midX {
+            setTooltipPostion(position: .right)
+        }else{
+            setTooltipPostion(position: .left)
+        }
         setTooltip(index: Int(entry.x))
     }
     
-    func chartValueNothingSelected(_ chartView: ChartViewBase) {
+    public func chartValueNothingSelected(_ chartView: ChartViewBase) {
         resetSelectedChart()
     }
     
     func resetSelectedChart(){
         DispatchQueue.main.async {[self] in
-            removeTooltipSubviews()
+            self.tooltipStackView.removeAllArrangedSubviews()
+            self.tooltipView.isHidden = true
             self.lineChartView.highlightValue(nil)
         }
+    }
+}
+
+extension LineSpotChartView {
+    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+        return "the value " + String(value)
+    }
+    
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let countDates = calcuteRengeDates()
+        var index = 0
+        if countDates == 1 {
+            index = Int(value.rounded()/Double(data.first?.step ?? 1))
+        }else{
+            index = Int(value.rounded()/Double(1440))
+        }
+        guard xValues.indices.contains(index) else { return "" }
+        return xValues[index]
+    }
+    
+    public func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
+        let range = calcuteRengeDates()
+        if range == 1{
+            return
+        }
+        if scaleX == 1 && scaleY == 1{
+            setCountXAxis()
+        }else{
+            chartView.xAxis.setLabelCount(2, force: true)
+        }
+    }
+    
+    func setCountXAxis(){
+        isEnableZoomDelegation(true)
+        lineChartView.doubleTapToZoomEnabled = false
+        let countDates = calcuteRengeDates()
+        var count = 0
+        if countDates <= 1{
+            count = 4
+        }
+        else if countDates <= 5{
+            count = countDates + 1
+        }
+        else {
+            count = (countDates+1) % 2 == 0 ? 5 : 4
+            isEnableZoomDelegation(false)
+        }
+        lineChartView.xAxis.setLabelCount(count, force: true)
+    }
+    
+    func isEnableZoomDelegation(_ isEnable : Bool){
+        lineChartView.pinchZoomEnabled = false
+        lineChartView.scaleXEnabled = false
+        lineChartView.scaleYEnabled = false
+        lineChartView.resetZoom()
+    }
+    
+    func calcuteRengeDates() -> Int{
+        let components = Calendar.current.dateComponents([.day],
+                                                         from: data.first?.startDate ?? Date(),
+                                                         to: data.first?.endDate ?? Date())
+        let countDates = (components.day ?? 0)
+        return countDates
+    }
+}
+
+
+//MARK: Tooltip
+extension LineSpotChartView {
+    func setupRemovedTooltipGesture(){
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(dismissTooltip(sender:)))
+        doubleTap.numberOfTouchesRequired = 2
+        lineChartView.addGestureRecognizer(doubleTap)
+        let tapOnTooltip = UITapGestureRecognizer(target: self, action: #selector(dismissTooltip(sender:)))
+        tapOnTooltip.numberOfTouchesRequired = 1
+        tooltipView.addGestureRecognizer(tapOnTooltip)
+    }
+    
+    @objc func dismissTooltip(sender: UITapGestureRecognizer){
+        resetSelectedChart()
+    }
+    
+    func setTooltip(index : Int){
+        var stackView : [UIView] = []
+        
+        addTimeToTooltip(stackView: &stackView, index: index)
+        
+        
+        for lineModel in data{
+            addEnableDataToTooltip(stackView: &stackView,
+                                   index: index,
+                                   lineModel: lineModel)
+        }
+        
+        DispatchQueue.main.async {
+            self.presentTooltip(stackView: stackView)
+        }
+    }
+    
+    func addTimeToTooltip(stackView: inout [UIView], index: Int){
+        if let startDate = data.first?.startDate {
+            let timeLbl = UILabel()
+            timeLbl.font = tooltipTitleFont
+            timeLbl.textColor = tooltipTextColor
+            timeLbl.textAlignment = .left
+            let step = data.first?.step ?? 1
+            timeLbl.text = findDateAndTime(start: startDate,
+                                           index: index,
+                                           step: step)
+            
+            stackView.append(timeLbl)
+        }
+    }
+    
+    func addEnableDataToTooltip(stackView: inout [UIView],
+                                index: Int,
+                                lineModel: LineSpotChartModel){
+        guard lineModel.data.entries.count > index/lineModel.step ,
+                lineModel.legend.isEnable else { return }
+        let titleLbl = UILabel()
+        titleLbl.font = tooltipTitleFont
+        titleLbl.textColor = tooltipTextColor
+        titleLbl.textAlignment = .left
+        titleLbl.text = lineModel.legend.key + ": "
+        let valueLbl = UILabel()
+        valueLbl.font = tooltipValueFont
+        valueLbl.textColor = tooltipTextColor
+        valueLbl.textAlignment = .right
+        if lineModel.isRoundedValue {
+            let value = Int(lineModel.data.entries[index/lineModel.step].y.rounded())
+            valueLbl.text = String(value.thousandSeprate()!)
+        }else{
+            let value = lineModel.data.entries[index/lineModel.step].y
+            valueLbl.text = String(format: "%.2f",value)
+        }
+        let unitLabel = UILabel()
+        unitLabel.font = tooltipUnitFont
+        unitLabel.textColor = tooltipTextColor
+        unitLabel.textAlignment = .left
+        unitLabel.text = " " + tootTipItemsUnit
+        let unitWidth = unitLabel.intrinsicContentSize.width
+        unitLabel.widthAnchor.constraint(equalToConstant: unitWidth).isActive = true
+        let vStack = UIStackView(arrangedSubviews: [titleLbl,valueLbl,unitLabel])
+        vStack.distribution = .fill
+        stackView.append(vStack)
+    }
+    
+    func presentTooltip(stackView: [UIView]) {
+        tooltipStackView.removeAllArrangedSubviews()
+        if stackView.count == 0{
+            return
+        }else{
+            tooltipView.isHidden = false
+        }
+        let vStack = UIStackView(arrangedSubviews: stackView)
+        vStack.tag = tooltipStackViewTag
+        vStack.axis = .vertical
+        vStack.spacing = tooltipItemsSpacing
+        tooltipStackView.addArrangedSubview(vStack)
+        tooltipStackView.distribution = .fillEqually
+    }
+    
+    func setTooltipPostion(position: tooltipPositionEnum) {
+        let screenWidth = self.frame.width
+        let tooltipWidth = self.tooltipView.frame.width
+        var padding: CGFloat = tooltipPadding
+        let lineChartPadding: CGFloat = 15
+        
+        DispatchQueue.main.async {
+            switch position {
+            case .right:
+                padding = screenWidth - tooltipWidth - padding - lineChartPadding
+                self.tooltipRightConstraint.constant = padding
+            case .left:
+                self.tooltipRightConstraint.constant = padding - lineChartPadding
+            }
+        }
+    }
+    
+    enum tooltipPositionEnum {
+        case right
+        case left
     }
 }
 

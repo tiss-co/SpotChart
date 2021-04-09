@@ -31,3 +31,15 @@ extension UIStackView {
         removedSubviews.forEach({ $0.removeFromSuperview() })
     }
 }
+
+extension Int{
+    func thousandSeprate() -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal          // Set defaults to the formatter that are common for showing decimal numbers
+        numberFormatter.usesGroupingSeparator = true    // Enabled separator
+        numberFormatter.groupingSeparator = ","         // Set the separator to "," (e.g. 1000000 = 1,000,000)
+        numberFormatter.groupingSize = 3
+        let myFormatted = numberFormatter.string(for: self)
+        return myFormatted
+    }
+}
