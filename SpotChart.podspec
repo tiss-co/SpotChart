@@ -5,7 +5,6 @@ Pod::Spec.new do |spec|
   spec.summary       = "Customizable Charts"
 
   spec.homepage      = "https://github.com/boof-tech/SpotChart"
-  spec.screenshots   = ""
 
 
   spec.swift_versions = '5.0'
