@@ -19,10 +19,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupChartView()
         setDataSet()
-        setDataSet()
-        setDataSet()
-        setDataSet()
-        setDataSet()
         setDataSet2()
         setDataSet3()
     }
@@ -97,7 +93,7 @@ class ViewController: UIViewController {
         dataSet.setColor(legend.color)
         dataSet.lineDashLengths = [4]
         
-        dataSet.drawHorizontalHighlightIndicatorEnabled = false
+        dataSet.drawHorizontalHighlightIndicatorEnabled = true
         dataSet.drawVerticalHighlightIndicatorEnabled = false
         var data = LineSpotChartModel(legend: legend, data: dataSet)
 //        data.startDate = Date()

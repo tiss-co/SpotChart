@@ -8,6 +8,7 @@ public final class SpotChartFrameworkBundle {
 public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     @IBOutlet var contentView: UIView!
+    @IBOutlet var contentainerView: UIView!
     @IBOutlet public weak var lineChartView: LineChartView!
     @IBOutlet weak var lineChartViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftAxisleadingConstraint: NSLayoutConstraint!
@@ -121,6 +122,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setupRemovedTooltipGesture()
         setupUI()
         setupLineChartDelegate()
+        setCountXAxis()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -132,7 +134,8 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setupRemovedTooltipGesture()
         setupUI()
         setupLineChartDelegate()
-    }
+        setCountXAxis()
+    }    
     
     func commonInit() {
         SpotChartFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
@@ -274,10 +277,11 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
         data.setDrawValues(false)
         DispatchQueue.main.async {[self] in
             lineChartView.data = data
-            self.legendCollectionView.reloadData()
-            let legendCollectionViewHeight = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-            legendCollectionViewHeightConstraint.constant = legendCollectionViewHeight
-            self.setNeedsLayout()
+            legendCollectionView.reloadData()
+            layoutIfNeeded()
+            let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+            legendCollectionViewHeightConstraint.constant = height
+            
         }
     }
 }
@@ -326,13 +330,13 @@ extension LineSpotChartView {
     
     public func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
         let range = calcuteRengeDates()
-        if range == 1{
+        if range <= 1{
             return
         }
         if scaleX == 1 && scaleY == 1{
             setCountXAxis()
         }else{
-            chartView.xAxis.setLabelCount(2, force: true)
+            lineChartView.xAxis.setLabelCount(2, force: true)
         }
     }
     
@@ -355,9 +359,9 @@ extension LineSpotChartView {
     }
     
     func isEnableZoomDelegation(_ isEnable : Bool){
-        lineChartView.pinchZoomEnabled = false
-        lineChartView.scaleXEnabled = false
-        lineChartView.scaleYEnabled = false
+        lineChartView.pinchZoomEnabled = isEnable
+        lineChartView.scaleXEnabled = isEnable
+        lineChartView.scaleYEnabled = isEnable
         lineChartView.resetZoom()
     }
     

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,11 +11,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LineSpotChartView" customModule="SpotChart" customModuleProvider="target">
             <connections>
-                <outlet property="contentView" destination="iN0-l3-epB" id="sU4-Zi-OUX"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="TJY-Km-R7b"/>
+                <outlet property="contentainerView" destination="ndW-D4-aok" id="gy9-4B-TCn"/>
                 <outlet property="leftAxisLabel" destination="Jyd-IB-yh7" id="CF6-G5-lEu"/>
                 <outlet property="leftAxisleadingConstraint" destination="DeZ-VI-xab" id="iPl-8j-oxy"/>
                 <outlet property="legendCollectionView" destination="ZMP-Ub-zR1" id="YyS-eq-K8B"/>
-                <outlet property="legendCollectionViewHeightConstraint" destination="Nmy-t4-ots" id="z2O-5t-bAR"/>
+                <outlet property="legendCollectionViewHeightConstraint" destination="2Jj-Lz-3cn" id="Qaw-7P-uUs"/>
                 <outlet property="lineChartView" destination="5ZL-Ct-JxL" id="bfs-bK-m4a"/>
                 <outlet property="lineChartViewHeightConstraint" destination="Gp0-PU-lcO" id="Jeg-1b-fKE"/>
                 <outlet property="rightAxisLabel" destination="S40-IX-I9r" id="RfW-vX-NO7"/>
@@ -27,11 +29,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="347"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="382"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndW-D4-aok">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="347"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="382"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyd-IB-yh7">
                             <rect key="frame" x="0.0" y="140" width="9.5" height="20.5"/>
@@ -73,10 +75,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZMP-Ub-zR1">
-                            <rect key="frame" x="0.0" y="300" width="414" height="47"/>
+                            <rect key="frame" x="0.0" y="320" width="414" height="42"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" priority="999" constant="50" id="Nmy-t4-ots"/>
+                                <constraint firstAttribute="height" priority="999" constant="50" id="2Jj-Lz-3cn"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="5" id="WeG-56-gy8">
                                 <size key="itemSize" width="128" height="40"/>
@@ -93,11 +95,11 @@
                         <constraint firstItem="Jyd-IB-yh7" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="DeZ-VI-xab"/>
                         <constraint firstAttribute="trailing" secondItem="5ZL-Ct-JxL" secondAttribute="trailing" constant="18" id="Eby-sa-b8w"/>
                         <constraint firstItem="5ZL-Ct-JxL" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" constant="18" id="GqH-lO-klb"/>
+                        <constraint firstItem="ZMP-Ub-zR1" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="bottom" constant="20" id="HMA-XO-iQd"/>
                         <constraint firstItem="S40-IX-I9r" firstAttribute="centerY" secondItem="5ZL-Ct-JxL" secondAttribute="centerY" id="Y5c-kt-YJw"/>
-                        <constraint firstAttribute="bottom" secondItem="ZMP-Ub-zR1" secondAttribute="bottom" id="Yfi-7B-0Vv"/>
                         <constraint firstItem="ZMP-Ub-zR1" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="Ygc-yr-a04"/>
                         <constraint firstAttribute="trailing" secondItem="ZMP-Ub-zR1" secondAttribute="trailing" id="bmT-XZ-h7v"/>
-                        <constraint firstItem="ZMP-Ub-zR1" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="bottom" id="hzN-Pt-VG8"/>
+                        <constraint firstAttribute="bottom" secondItem="ZMP-Ub-zR1" secondAttribute="bottom" constant="20" id="jjg-DJ-Nj4"/>
                         <constraint firstItem="5ZL-Ct-JxL" firstAttribute="top" secondItem="ndW-D4-aok" secondAttribute="top" id="paV-u6-5na"/>
                     </constraints>
                 </view>
@@ -111,7 +113,7 @@
                 <constraint firstItem="ndW-D4-aok" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="baE-bV-C0w"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-79.710144927536234" y="53.236607142857139"/>
+            <point key="canvasLocation" x="-79.710144927536234" y="64.955357142857139"/>
         </view>
     </objects>
     <resources>
