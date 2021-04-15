@@ -325,7 +325,7 @@ extension LineSpotChartView {
         let countDates = calcuteRengeDates()
         var index = 0
         if countDates == 1 {
-            index = Int(value.rounded()/Double(data.first?.step ?? 1))
+            index = Int(value.rounded()/Double(5))
         }else{
             index = Int(value.rounded()/Double(1440))
         }
