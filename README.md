@@ -11,7 +11,7 @@
 
 ## Cocoapods
 ```ruby
-pod 'SpotChart', :git => 'https://github.com/boof-tech/SpotChart', :tag => '0.0.4'
+pod 'SpotChart', :git => 'https://github.com/boof-tech/SpotChart', :tag => '0.0.5'
 ```
 
 # Usage
