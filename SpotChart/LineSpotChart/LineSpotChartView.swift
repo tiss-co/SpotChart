@@ -25,11 +25,17 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     public var data: [LineSpotChartModel] = [] {
         didSet {
-            if let start = data.first?.startDate , let end = data.first?.endDate {
-                xValues = createXAxis(startDate: start, endDate: end)
-            }
             reloadChart()
         }
+    }
+    
+    var startDate: Date?
+    var endDate: Date?
+    
+    public func setRangeDate(start: Date, end: Date) {
+        self.startDate = start
+        self.endDate = end
+        xValues = createXAxis(startDate: start, endDate: end)
     }
     
     public var lineChartViewHeight: CGFloat = 300.0 {
@@ -135,7 +141,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setupUI()
         setupLineChartDelegate()
         setCountXAxis()
-    }    
+    }
     
     func commonInit() {
         SpotChartFrameworkBundle.main.loadNibNamed(LineSpotChartView.nameOfClass, owner: self, options: nil)
@@ -331,6 +337,7 @@ extension LineSpotChartView {
     public func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
         let range = calcuteRengeDates()
         if range <= 1{
+            lineChartView.xAxis.setLabelCount(4, force: true)
             return
         }
         if scaleX == 1 && scaleY == 1{
@@ -367,8 +374,8 @@ extension LineSpotChartView {
     
     func calcuteRengeDates() -> Int{
         let components = Calendar.current.dateComponents([.day],
-                                                         from: data.first?.startDate ?? Date(),
-                                                         to: data.first?.endDate ?? Date())
+                                                         from: startDate ?? Date(),
+                                                         to: endDate ?? Date())
         let countDates = (components.day ?? 0)
         return countDates
     }
@@ -408,7 +415,7 @@ extension LineSpotChartView {
     }
     
     func addTimeToTooltip(stackView: inout [UIView], index: Int){
-        if let startDate = data.first?.startDate {
+        if let startDate = startDate{
             let timeLbl = UILabel()
             timeLbl.font = tooltipTitleFont
             timeLbl.textColor = tooltipTextColor
