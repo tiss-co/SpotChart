@@ -36,6 +36,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         self.startDate = start
         self.endDate = end
         xValues = createXAxis(startDate: start, endDate: end)
+        setXAxisLabelCount()
     }
     
     public var lineChartViewHeight: CGFloat = 300.0 {
@@ -128,7 +129,6 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setupRemovedTooltipGesture()
         setupUI()
         setupLineChartDelegate()
-        setCountXAxis()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -140,7 +140,6 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setupRemovedTooltipGesture()
         setupUI()
         setupLineChartDelegate()
-        setCountXAxis()
     }
     
     func commonInit() {
@@ -335,19 +334,23 @@ extension LineSpotChartView {
     }
     
     public func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
+        setXAxisLabelCount(scaleX: scaleX, scaleY: scaleY)
+    }
+    
+    func setXAxisLabelCount(scaleX: CGFloat = 1.0, scaleY: CGFloat = 1.0){
         let range = calcuteRengeDates()
         if range <= 1{
             lineChartView.xAxis.setLabelCount(4, force: true)
             return
         }
         if scaleX == 1 && scaleY == 1{
-            setCountXAxis()
+            setZoomOutCountXAxis()
         }else{
             lineChartView.xAxis.setLabelCount(2, force: true)
         }
     }
     
-    func setCountXAxis(){
+    func setZoomOutCountXAxis(){
         isEnableZoomDelegation(true)
         lineChartView.doubleTapToZoomEnabled = false
         let countDates = calcuteRengeDates()
