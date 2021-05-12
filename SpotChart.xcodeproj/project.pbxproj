@@ -172,6 +172,7 @@
 				297C067025FF67ED004467C1 /* Extension.swift */,
 				297C060325FF6080004467C1 /* SpotChart.h */,
 				297C060425FF6080004467C1 /* Info.plist */,
+				297C067D25FF77D1004467C1 /* Legend */,
 				297C067C25FF77B9004467C1 /* LineSpotChart */,
 			);
 			path = SpotChart;
@@ -221,7 +222,6 @@
 		297C067C25FF77B9004467C1 /* LineSpotChart */ = {
 			isa = PBXGroup;
 			children = (
-				297C067D25FF77D1004467C1 /* CollectionViewCell */,
 				297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */,
 				297C062725FF6270004467C1 /* LineSpotChartView.swift */,
 				297C066925FF661F004467C1 /* LineSpotChartView.xib */,
@@ -230,14 +230,14 @@
 			path = LineSpotChart;
 			sourceTree = "<group>";
 		};
-		297C067D25FF77D1004467C1 /* CollectionViewCell */ = {
+		297C067D25FF77D1004467C1 /* Legend */ = {
 			isa = PBXGroup;
 			children = (
 				297C06B82600CBF9004467C1 /* LegendModel.swift */,
 				297C068A25FF783F004467C1 /* LegendCollectionViewCell.swift */,
 				297C068B25FF783F004467C1 /* LegendCollectionViewCell.xib */,
 			);
-			path = CollectionViewCell;
+			path = Legend;
 			sourceTree = "<group>";
 		};
 		8FD30FF602088F2070BE5F41 /* Frameworks */ = {
