@@ -15,7 +15,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     @IBOutlet weak var leftAxisLabel: UILabel!
     @IBOutlet weak var rightAxisLabel: UILabel!
     @IBOutlet weak var rightAxisTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var legendCollectionView: UICollectionView!
+    @IBOutlet public weak var legendCollectionView: UICollectionView!
     @IBOutlet weak var legendCollectionViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipView: UIView!
     @IBOutlet weak var tooltipStackView: UIStackView!
