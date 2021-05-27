@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0A7DFB36E00F50E5B886B0A5 /* Pods_SpotChartExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */; };
 		292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292C50D2260239EE003E28F3 /* CircleMarker.swift */; };
+		2945BB1B264C001D00D0EB3D /* BarSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */; };
+		2945BB27264C009D00D0EB3D /* BarSpotChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */; };
+		2945BB28264C009D00D0EB3D /* BarSpotChartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */; };
 		2969820126024C1900481490 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2969820026024C1900481490 /* Charts.framework */; };
 		297C060A25FF6080004467C1 /* SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297C060025FF6080004467C1 /* SpotChart.framework */; };
 		297C060F25FF6080004467C1 /* SpotChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C060E25FF6080004467C1 /* SpotChartTests.swift */; };
@@ -16,7 +19,7 @@
 		297C062825FF6270004467C1 /* LineSpotChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C062725FF6270004467C1 /* LineSpotChartView.swift */; };
 		297C063225FF6423004467C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C063125FF6423004467C1 /* AppDelegate.swift */; };
 		297C063425FF6423004467C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C063325FF6423004467C1 /* SceneDelegate.swift */; };
-		297C063625FF6423004467C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C063525FF6423004467C1 /* ViewController.swift */; };
+		297C063625FF6423004467C1 /* LineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C063525FF6423004467C1 /* LineViewController.swift */; };
 		297C063925FF6423004467C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297C063725FF6423004467C1 /* Main.storyboard */; };
 		297C063B25FF6423004467C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297C063A25FF6423004467C1 /* Assets.xcassets */; };
 		297C063E25FF6423004467C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297C063C25FF6423004467C1 /* LaunchScreen.storyboard */; };
@@ -28,6 +31,7 @@
 		297C068D25FF783F004467C1 /* LegendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 297C068B25FF783F004467C1 /* LegendCollectionViewCell.xib */; };
 		297C06AD25FFA01E004467C1 /* LineSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */; };
 		297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06B82600CBF9004467C1 /* LegendModel.swift */; };
+		29F0B6F2265F958000812B73 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0B6F1265F958000812B73 /* BarViewController.swift */; };
 		7AB16EDCB4FEF04CEC2E7020 /* Pods_SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F18768680EFE169CE7A79B3 /* Pods_SpotChart.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +64,9 @@
 		292C50D2260239EE003E28F3 /* CircleMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMarker.swift; sourceTree = "<group>"; };
 		292C50E126023F95003E28F3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292C50E326023FCA003E28F3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarSpotChartModel.swift; sourceTree = "<group>"; };
+		2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarSpotChartView.swift; sourceTree = "<group>"; };
+		2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarSpotChartView.xib; sourceTree = "<group>"; };
 		296981E126024AF800481490 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		296981EE26024B5B00481490 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2969820026024C1900481490 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +80,7 @@
 		297C062F25FF6422004467C1 /* SpotChartExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotChartExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297C063125FF6423004467C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297C063325FF6423004467C1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		297C063525FF6423004467C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		297C063525FF6423004467C1 /* LineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineViewController.swift; sourceTree = "<group>"; };
 		297C063825FF6423004467C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		297C063A25FF6423004467C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		297C063D25FF6423004467C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -90,6 +97,7 @@
 		297C068B25FF783F004467C1 /* LegendCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LegendCollectionViewCell.xib; sourceTree = "<group>"; };
 		297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpotChartModel.swift; sourceTree = "<group>"; };
 		297C06B82600CBF9004467C1 /* LegendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendModel.swift; sourceTree = "<group>"; };
+		29F0B6F1265F958000812B73 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChartExample.release.xcconfig"; path = "Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample.release.xcconfig"; sourceTree = "<group>"; };
 		42BAB7BCCE26B56CC8CA6179 /* Pods-SpotChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart.release.xcconfig"; path = "Target Support Files/Pods-SpotChart/Pods-SpotChart.release.xcconfig"; sourceTree = "<group>"; };
 		4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpotChartExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +148,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2945BB19264BFFE900D0EB3D /* BarSpotChart */ = {
+			isa = PBXGroup;
+			children = (
+				2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */,
+				2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */,
+				2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */,
+			);
+			path = BarSpotChart;
+			sourceTree = "<group>";
+		};
 		297C05F625FF6080004467C1 = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +192,7 @@
 				297C060425FF6080004467C1 /* Info.plist */,
 				297C067D25FF77D1004467C1 /* Legend */,
 				297C067C25FF77B9004467C1 /* LineSpotChart */,
+				2945BB19264BFFE900D0EB3D /* BarSpotChart */,
 			);
 			path = SpotChart;
 			sourceTree = "<group>";
@@ -192,7 +211,8 @@
 			children = (
 				297C063125FF6423004467C1 /* AppDelegate.swift */,
 				297C063325FF6423004467C1 /* SceneDelegate.swift */,
-				297C063525FF6423004467C1 /* ViewController.swift */,
+				297C063525FF6423004467C1 /* LineViewController.swift */,
+				29F0B6F1265F958000812B73 /* BarViewController.swift */,
 				297C063725FF6423004467C1 /* Main.storyboard */,
 				297C063A25FF6423004467C1 /* Assets.xcassets */,
 				297C063C25FF6423004467C1 /* LaunchScreen.storyboard */,
@@ -427,6 +447,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2945BB28264C009D00D0EB3D /* BarSpotChartView.xib in Resources */,
 				297C066A25FF661F004467C1 /* LineSpotChartView.xib in Resources */,
 				297C068D25FF783F004467C1 /* LegendCollectionViewCell.xib in Resources */,
 			);
@@ -534,6 +555,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2945BB1B264C001D00D0EB3D /* BarSpotChartModel.swift in Sources */,
+				2945BB27264C009D00D0EB3D /* BarSpotChartView.swift in Sources */,
 				297C062825FF6270004467C1 /* LineSpotChartView.swift in Sources */,
 				292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */,
 				297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */,
@@ -555,8 +578,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				297C063625FF6423004467C1 /* ViewController.swift in Sources */,
+				297C063625FF6423004467C1 /* LineViewController.swift in Sources */,
 				297C063225FF6423004467C1 /* AppDelegate.swift in Sources */,
+				29F0B6F2265F958000812B73 /* BarViewController.swift in Sources */,
 				297C063425FF6423004467C1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,6 +786,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ca.edgecomenergy.SpotChart;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -791,6 +816,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ca.edgecomenergy.SpotChart;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
