@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Charts
 
 extension NSObject {
     @objc
@@ -41,5 +42,29 @@ extension Int{
         numberFormatter.groupingSize = 3
         let myFormatted = numberFormatter.string(for: self)
         return myFormatted
+    }
+}
+
+extension BarChartView {
+
+    private class BarChartFormatter: NSObject, IAxisValueFormatter {
+        
+        var labels: [String] = []
+        
+        func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+            return labels[Int(value)]
+        }
+        
+        init(labels: [String]) {
+            super.init()
+            self.labels = labels
+        }
+    }
+    
+    func setBarChartData(xValues: [String]) {
+        let chartFormatter = BarChartFormatter(labels: xValues)
+        let xAxis = XAxis()
+        xAxis.valueFormatter = chartFormatter
+        self.xAxis.valueFormatter = xAxis.valueFormatter
     }
 }
