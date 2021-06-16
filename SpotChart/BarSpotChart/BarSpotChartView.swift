@@ -57,6 +57,7 @@ public class BarSpotChartView: UIView {
         self.startDate = start
         self.endDate = end
         xValues = createXAxis(startDate: start, endDate: end)
+        //        setXAxisLabelCount()
     }
     
     public var barChartViewHeight: CGFloat = 300.0 {
@@ -293,12 +294,14 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     func reloadChart(){
         var filterValues: [[Double]] = []
         let filteredLegends = legends.filter{$0.isEnable}
+        legendCollectionView.reloadData()
+        if filteredLegends.isEmpty { return }
         for item in data {
             let filteredData = filterData(legends: legends, inputData: item)
             filterValues.append(filteredData)
         }
         var dataEntry: [BarChartDataEntry] = []
-        for (index,item) in data.enumerated() {
+        for (index,item) in filterValues.enumerated() {
             dataEntry.append(BarChartDataEntry(x: Double(index), yValues: item))
         }
         let set = BarChartDataSet(entries: dataEntry, label: "")
@@ -307,8 +310,6 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
         let data = BarChartData(dataSet: set)
         data.setDrawValues(false)
         barChartView.data = data
-        
-        legendCollectionView.reloadData()
         let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
         legendCollectionViewHeightConstraint.constant = height
         layoutIfNeeded()
