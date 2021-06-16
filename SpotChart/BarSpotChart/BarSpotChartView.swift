@@ -25,6 +25,7 @@ public class BarSpotChartView: UIView {
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     
     
+    
     public var data: [[Double]] = [] {
         didSet {
             reloadChart()
@@ -56,7 +57,6 @@ public class BarSpotChartView: UIView {
         self.startDate = start
         self.endDate = end
         xValues = createXAxis(startDate: start, endDate: end)
-        setXAxisLabelCount()
     }
     
     public var barChartViewHeight: CGFloat = 300.0 {
@@ -136,7 +136,7 @@ public class BarSpotChartView: UIView {
     
     public var xValues : [String] = [] {
         didSet {
-            //            barChartView.xAxis.valueForma/tter = xValues.isEmpty ? nil : self
+            barChartView.setBarChartData(xValues: xValues)
         }
     }
     
@@ -338,59 +338,8 @@ extension BarSpotChartView : ChartViewDelegate{
             self.barChartView.highlightValue(nil)
         }
     }
-}
-
-extension BarSpotChartView {
-    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
-        return "the value " + String(value)
-    }
     
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let countDates = calcuteRengeDates()
-        var index = 0
-        if countDates == 1 {
-            index = Int(value.rounded()/Double(5))
-        }else{
-            index = Int(value.rounded()/Double(1440))
-        }
-        guard xValues.indices.contains(index) else { return "" }
-        return xValues[index]
-    }
     
-    public func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
-        setXAxisLabelCount(scaleX: scaleX, scaleY: scaleY)
-    }
-    
-    func setXAxisLabelCount(scaleX: CGFloat = 1.0, scaleY: CGFloat = 1.0){
-        let range = calcuteRengeDates()
-        if range <= 1{
-            barChartView.xAxis.setLabelCount(4, force: true)
-            return
-        }
-        if scaleX == 1 && scaleY == 1{
-            setZoomOutCountXAxis()
-        }else{
-            barChartView.xAxis.setLabelCount(2, force: true)
-        }
-    }
-    
-    func setZoomOutCountXAxis(){
-        isEnableZoomDelegation(true)
-        barChartView.doubleTapToZoomEnabled = false
-        let countDates = calcuteRengeDates()
-        var count = 0
-        if countDates <= 1{
-            count = 4
-        }
-        else if countDates <= 5{
-            count = countDates + 1
-        }
-        else {
-            count = (countDates+1) % 2 == 0 ? 5 : 4
-            isEnableZoomDelegation(false)
-        }
-        barChartView.xAxis.setLabelCount(count, force: true)
-    }
     
     func isEnableZoomDelegation(_ isEnable : Bool){
         barChartView.pinchZoomEnabled = isEnable
@@ -432,9 +381,9 @@ extension BarSpotChartView {
         let filteredLegend = legends.filter{$0.isEnable}
         filteredData = filterData(legends: legends, inputData: filteredData)
         addEnableDataToTooltip(stackView: &stackView,
-                                   index: index,
-                                   legends: filteredLegend,
-                                   data: filteredData)
+                               index: index,
+                               legends: filteredLegend,
+                               data: filteredData)
         
         DispatchQueue.main.async {
             self.presentTooltip(stackView: stackView)
