@@ -25,14 +25,32 @@ public class BarSpotChartView: UIView {
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     
     
-    public var data: [LineSpotChartModel] = [] {
+    public var data: [[Double]] = [] {
         didSet {
             reloadChart()
         }
     }
     
-    var startDate: Date?
-    var endDate: Date?
+    public var legends: [LegendModel] = [] {
+        didSet {
+            reloadChart()
+        }
+    }
+    
+    public var step: Int = 1 {
+        didSet {
+            reloadChart()
+        }
+    }
+    
+    public var startDate: Date?
+    public var endDate: Date? {
+        didSet {
+            
+        }
+    }
+    
+    public var isRoundedValue: Bool = false
     
     public func setRangeDate(start: Date, end: Date) {
         self.startDate = start
@@ -212,17 +230,10 @@ public class BarSpotChartView: UIView {
         
         let sDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: start)
         
-        let day = index/1440
-        let minute = (index - (day * 1440))
+        let day = index
         
         guard let newDate = Calendar.current.date(byAdding: .day, value: day, to: sDate!) else { return ""}
-        if minute == 0 {
-            let dateString = dateFormatter.string(from: newDate)
-            return dateString
-        }
-        guard let newDateWithMinute = Calendar.current.date(byAdding: .minute, value: minute, to: newDate) else { return ""}
-        
-        let dateString = newFormatter.string(from: newDateWithMinute)
+        let dateString = dateFormatter.string(from: newDate)
         return dateString
     }
     
@@ -260,12 +271,12 @@ public class BarSpotChartView: UIView {
 extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate{
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return legends.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
-        let legend = data[indexPath.row].legend
+        let legend = legends[indexPath.row]
         cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
@@ -273,23 +284,34 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.tooltipView.isHidden = true
+        legends[indexPath.row].isEnable = !legends[indexPath.row].isEnable
         self.barChartView.highlightValue(nil)
-        data[indexPath.row].legend.isEnable = !data[indexPath.row].legend.isEnable
+        self.barChartView.data = nil
         reloadChart()
     }
     
     func reloadChart(){
-        let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
-        let data = LineChartData(dataSets: dataSets)
-        data.setDrawValues(false)
-        DispatchQueue.main.async {[self] in
-            barChartView.data = data
-            legendCollectionView.reloadData()
-            layoutIfNeeded()
-            let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-            legendCollectionViewHeightConstraint.constant = height
-            
+        var filterValues: [[Double]] = []
+        let filteredLegends = legends.filter{$0.isEnable}
+        for item in data {
+            let filteredData = filterData(legends: legends, inputData: item)
+            filterValues.append(filteredData)
         }
+        var dataEntry: [BarChartDataEntry] = []
+        for (index,item) in data.enumerated() {
+            dataEntry.append(BarChartDataEntry(x: Double(index), yValues: item))
+        }
+        let set = BarChartDataSet(entries: dataEntry, label: "")
+        set.stackLabels = filteredLegends.map{$0.key}
+        set.colors = filteredLegends.map{$0.color}
+        let data = BarChartData(dataSet: set)
+        data.setDrawValues(false)
+        barChartView.data = data
+        
+        legendCollectionView.reloadData()
+        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+        legendCollectionViewHeightConstraint.constant = height
+        layoutIfNeeded()
     }
 }
 
@@ -406,13 +428,13 @@ extension BarSpotChartView {
         var stackView : [UIView] = []
         
         addTimeToTooltip(stackView: &stackView, index: index)
-        
-        
-        for lineModel in data{
-            addEnableDataToTooltip(stackView: &stackView,
+        var filteredData = data[index]
+        let filteredLegend = legends.filter{$0.isEnable}
+        filteredData = filterData(legends: legends, inputData: filteredData)
+        addEnableDataToTooltip(stackView: &stackView,
                                    index: index,
-                                   lineModel: lineModel)
-        }
+                                   legends: filteredLegend,
+                                   data: filteredData)
         
         DispatchQueue.main.async {
             self.presentTooltip(stackView: stackView)
@@ -425,7 +447,6 @@ extension BarSpotChartView {
             timeLbl.font = tooltipTitleFont
             timeLbl.textColor = tooltipTextColor
             timeLbl.textAlignment = .left
-            let step = data.first?.step ?? 1
             timeLbl.text = findDateAndTime(start: startDate,
                                            index: index,
                                            step: step)
@@ -434,37 +455,55 @@ extension BarSpotChartView {
         }
     }
     
+    func filterData(legends: [LegendModel], inputData: [Double]) -> [Double] {
+        var exportData = inputData
+        var disableIndexes: [Int] = []
+        for (index,item) in legends.enumerated() {
+            if !item.isEnable {
+                disableIndexes.append(index)
+            }
+        }
+        for index in disableIndexes {
+            if exportData.indices.contains(index) {
+                exportData.remove(at: index)
+            }
+        }
+        return exportData
+    }
+    
     func addEnableDataToTooltip(stackView: inout [UIView],
                                 index: Int,
-                                lineModel: LineSpotChartModel){
-        guard lineModel.data.entries.count > index/lineModel.step ,
-              lineModel.legend.isEnable else { return }
-        let titleLbl = UILabel()
-        titleLbl.font = tooltipTitleFont
-        titleLbl.textColor = tooltipTextColor
-        titleLbl.textAlignment = .left
-        titleLbl.text = lineModel.legend.key + ": "
-        let valueLbl = UILabel()
-        valueLbl.font = tooltipValueFont
-        valueLbl.textColor = tooltipTextColor
-        valueLbl.textAlignment = .right
-        if lineModel.isRoundedValue {
-            let value = Int(lineModel.data.entries[index/lineModel.step].y.rounded())
-            valueLbl.text = String(value.thousandSeprate()!)
-        }else{
-            let value = lineModel.data.entries[index/lineModel.step].y
-            valueLbl.text = String(format: "%.2f",value)
+                                legends: [LegendModel],
+                                data: [Double]){
+        for (row,legend) in legends.enumerated() {
+            if !data.indices.contains(row) { continue }
+            let titleLbl = UILabel()
+            titleLbl.font = tooltipTitleFont
+            titleLbl.textColor = tooltipTextColor
+            titleLbl.textAlignment = .left
+            titleLbl.text = legend.key + ": "
+            let valueLbl = UILabel()
+            valueLbl.font = tooltipValueFont
+            valueLbl.textColor = tooltipTextColor
+            valueLbl.textAlignment = .right
+            if isRoundedValue {
+                let value = Int(data[row].rounded())
+                valueLbl.text = String(value.thousandSeprate()!)
+            }else{
+                let value = data[row]
+                valueLbl.text = String(format: "%.2f",value)
+            }
+            let unitLabel = UILabel()
+            unitLabel.font = tooltipUnitFont
+            unitLabel.textColor = tooltipTextColor
+            unitLabel.textAlignment = .left
+            unitLabel.text = " " + tootTipItemsUnit
+            let unitWidth = unitLabel.intrinsicContentSize.width
+            unitLabel.widthAnchor.constraint(equalToConstant: unitWidth).isActive = true
+            let vStack = UIStackView(arrangedSubviews: [titleLbl,valueLbl,unitLabel])
+            vStack.distribution = .fill
+            stackView.append(vStack)
         }
-        let unitLabel = UILabel()
-        unitLabel.font = tooltipUnitFont
-        unitLabel.textColor = tooltipTextColor
-        unitLabel.textAlignment = .left
-        unitLabel.text = " " + tootTipItemsUnit
-        let unitWidth = unitLabel.intrinsicContentSize.width
-        unitLabel.widthAnchor.constraint(equalToConstant: unitWidth).isActive = true
-        let vStack = UIStackView(arrangedSubviews: [titleLbl,valueLbl,unitLabel])
-        vStack.distribution = .fill
-        stackView.append(vStack)
     }
     
     func presentTooltip(stackView: [UIView]) {

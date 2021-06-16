@@ -162,8 +162,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         self.tooltipView.backgroundColor = tooltipBackgroundColor.withAlphaComponent(0.6)
         self.tooltipStackView.backgroundColor = .clear
         self.rightAxisLabel.font = rightAxisTitleFont
-        self.leftAxisLabel.font = leftAxisTitleFont
-        
+        self.leftAxisLabel.font = leftAxisTitleFont   
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){

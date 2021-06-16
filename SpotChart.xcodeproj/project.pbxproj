@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A7DFB36E00F50E5B886B0A5 /* Pods_SpotChartExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */; };
 		292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292C50D2260239EE003E28F3 /* CircleMarker.swift */; };
-		2945BB1B264C001D00D0EB3D /* BarSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */; };
 		2945BB27264C009D00D0EB3D /* BarSpotChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */; };
 		2945BB28264C009D00D0EB3D /* BarSpotChartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */; };
 		2969820126024C1900481490 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2969820026024C1900481490 /* Charts.framework */; };
@@ -64,7 +63,6 @@
 		292C50D2260239EE003E28F3 /* CircleMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMarker.swift; sourceTree = "<group>"; };
 		292C50E126023F95003E28F3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292C50E326023FCA003E28F3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarSpotChartModel.swift; sourceTree = "<group>"; };
 		2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarSpotChartView.swift; sourceTree = "<group>"; };
 		2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarSpotChartView.xib; sourceTree = "<group>"; };
 		296981E126024AF800481490 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +149,6 @@
 		2945BB19264BFFE900D0EB3D /* BarSpotChart */ = {
 			isa = PBXGroup;
 			children = (
-				2945BB1A264C001D00D0EB3D /* BarSpotChartModel.swift */,
 				2945BB25264C009C00D0EB3D /* BarSpotChartView.swift */,
 				2945BB26264C009C00D0EB3D /* BarSpotChartView.xib */,
 			);
@@ -555,7 +552,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2945BB1B264C001D00D0EB3D /* BarSpotChartModel.swift in Sources */,
 				2945BB27264C009D00D0EB3D /* BarSpotChartView.swift in Sources */,
 				297C062825FF6270004467C1 /* LineSpotChartView.swift in Sources */,
 				292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */,
