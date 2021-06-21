@@ -23,14 +23,14 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     
     
-    public var data: [LineSpotChartModel] = [] {
-        didSet {
-            reloadChart()
-        }
-    }
+    public var data: [LineSpotChartModel] = []
     
     var startDate: Date?
     var endDate: Date?
+    
+    public func reload() {
+        reloadChart()
+    }
     
     public func setRangeDate(start: Date, end: Date) {
         self.startDate = start
@@ -162,7 +162,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         self.tooltipView.backgroundColor = tooltipBackgroundColor.withAlphaComponent(0.6)
         self.tooltipStackView.backgroundColor = .clear
         self.rightAxisLabel.font = rightAxisTitleFont
-        self.leftAxisLabel.font = leftAxisTitleFont   
+        self.leftAxisLabel.font = leftAxisTitleFont
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){
@@ -282,10 +282,8 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
         DispatchQueue.main.async {[self] in
             lineChartView.data = data
             legendCollectionView.reloadData()
-            layoutIfNeeded()
             let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
             legendCollectionViewHeightConstraint.constant = height
-            
         }
     }
 }

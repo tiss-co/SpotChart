@@ -53,7 +53,7 @@ extension BarChartView {
         
         func stringForValue(_ value: Double, axis: AxisBase?) -> String {
             let index = Int(value)
-            return !labels.isEmpty && labels.count >= index ? labels[index] : ""
+            return !labels.isEmpty && labels.count > index ? labels[index] : ""
         }
         
         init(labels: [String]) {
