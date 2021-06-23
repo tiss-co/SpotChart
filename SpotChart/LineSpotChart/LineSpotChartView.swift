@@ -244,8 +244,12 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
                 }
                 start = newDate
             }else{
-                guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: start) else { break }
-                dates.append(monthFormatter.string(from: start))
+                guard let newDate = Calendar.current.date(byAdding: .hour, value: 1, to: start) else { break }
+                if index % 24 == 0 {
+                    dates.append(monthFormatter.string(from: start))
+                } else {
+                    dates.append(hourFormatter.string(from: start))
+                }
                 start = newDate
             }
             index += 1
@@ -270,17 +274,28 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.tooltipView.isHidden = true
-        self.lineChartView.highlightValue(nil)
-        data[indexPath.row].legend.isEnable = !data[indexPath.row].legend.isEnable
+        if data.indices.contains(indexPath.item) {
+            data[indexPath.item].legend.isEnable.toggle()
+        }
         reloadChart()
     }
     
     func reloadChart(){
+        lineChartView.highlightValue(nil)
+        lineChartView.data = nil
         let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
+        if dataSets.isEmpty {
+            updateLegend()
+            return
+        }
         let data = LineChartData(dataSets: dataSets)
         data.setDrawValues(false)
-        DispatchQueue.main.async {[self] in
-            lineChartView.data = data
+        lineChartView.data = data
+        updateLegend()
+    }
+    
+    func updateLegend() {
+        DispatchQueue.main.async { [self] in
             legendCollectionView.reloadData()
             let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
             legendCollectionViewHeightConstraint.constant = height
@@ -324,7 +339,7 @@ extension LineSpotChartView {
         if countDates == 1 {
             index = Int(value.rounded()/Double(5))
         }else{
-            index = Int(value.rounded()/Double(1440))
+            index = Int(value.rounded()/Double(60))
         }
         guard xValues.indices.contains(index) else { return "" }
         return xValues[index]
