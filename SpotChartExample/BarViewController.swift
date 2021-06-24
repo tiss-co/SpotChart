@@ -46,5 +46,17 @@ class BarViewController: UIViewController {
         l.form = .square
         l.formToTextSpace = 4
         l.xEntrySpace = 6
+        
+        setdata()
     }
+    
+    func setdata() {
+        barSpotChart.step = 1440
+        barSpotChart.legends = [LegendModel(key: "Maziar", color: .black),
+                                LegendModel(key: "amir", color: .blue),
+                                LegendModel(key: "Mohammad", color: .systemPink)]
+        barSpotChart.xValues = ["Fri","Son","Mon"]
+        barSpotChart.data = [[3,4,7],[0,5,5],[5,5,4]]
+    }
+    
 }

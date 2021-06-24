@@ -413,19 +413,19 @@ extension BarSpotChartView {
     }
     
     func filterData(legends: [LegendModel], inputData: [Double]) -> [Double] {
-        var exportData = inputData
-        var disableIndexes: [Int] = []
+        var enablesIndexes: [Int] = []
         for (index,item) in legends.enumerated() {
-            if !item.isEnable {
-                disableIndexes.append(index)
+            if item.isEnable {
+                enablesIndexes.append(index)
             }
         }
-        for index in disableIndexes {
-            if exportData.indices.contains(index) {
-                exportData.remove(at: index)
+        var temp: [Double] = []
+        for index in enablesIndexes {
+            if inputData.indices.contains(index) {
+                temp.append(inputData[index])
             }
         }
-        return exportData
+        return temp
     }
     
     func addEnableDataToTooltip(stackView: inout [UIView],
