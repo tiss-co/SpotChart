@@ -447,8 +447,9 @@ extension LineSpotChartView {
     func addEnableDataToTooltip(stackView: inout [UIView],
                                 index: Int,
                                 lineModel: LineSpotChartModel){
-        guard lineModel.data.entries.count > index/lineModel.step ,
-                lineModel.legend.isEnable else { return }
+        if Int(lineModel.data.xMax) < index,
+           Int(lineModel.data.xMin) > index,
+           lineModel.legend.isEnable  { return }
         let titleLbl = UILabel()
         titleLbl.font = tooltipTitleFont
         titleLbl.textColor = tooltipTextColor
@@ -459,7 +460,8 @@ extension LineSpotChartView {
         valueLbl.textColor = tooltipTextColor
         valueLbl.textAlignment = .right
         if lineModel.isRoundedValue {
-            let value = Int(lineModel.data.entries[index/lineModel.step].y.rounded())
+            guard let index = lineModel.data.entries.filter { Int($0.x) == index }.first else { return }
+            let value = Int(index.y.rounded())
             valueLbl.text = String(value.thousandSeprate()!)
         }else{
             let value = lineModel.data.entries[index/lineModel.step].y
