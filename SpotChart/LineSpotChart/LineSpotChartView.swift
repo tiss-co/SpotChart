@@ -258,7 +258,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     }
 }
 
-extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate{
+extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return data.count
@@ -266,7 +266,7 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
-        let legend = data[indexPath.row].legend
+        let legend = data[indexPath.item].legend
         cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
@@ -278,6 +278,16 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
             data[indexPath.item].legend.isEnable.toggle()
         }
         reloadChart()
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = data[indexPath.item].legend.key
+        label.sizeToFit()
+        let widthSize = label.frame.width + 20
+        return CGSize(width: widthSize, height: 25)
     }
     
     func reloadChart(){
@@ -295,11 +305,12 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func updateLegend() {
-        DispatchQueue.main.async { [self] in
-            legendCollectionView.reloadData()
-            let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-            legendCollectionViewHeightConstraint.constant = height
-        }
+        legendCollectionView.invalidateIntrinsicContentSize()
+        legendCollectionView.reloadData()
+        self.layoutSubviews()
+        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+        legendCollectionViewHeightConstraint.constant = height
+        print("Spot Chart: \(data.first?.legend.key ?? "") height is: \(height)")
     }
 }
 
@@ -312,6 +323,9 @@ extension LineSpotChartView : ChartViewDelegate{
         }else{
             setTooltipPostion(position: .left)
         }
+        let selectedColor = chartView.data?.dataSets[highlight.dataSetIndex].colors.first ?? UIColor.lightGray
+        let marker = CircleMarker(color: selectedColor)
+        lineChartView.marker = marker
         setTooltip(index: Int(entry.x))
     }
     
@@ -320,11 +334,9 @@ extension LineSpotChartView : ChartViewDelegate{
     }
     
     func resetSelectedChart(){
-        DispatchQueue.main.async {[self] in
-            self.tooltipStackView.removeAllArrangedSubviews()
-            self.tooltipView.isHidden = true
-            self.lineChartView.highlightValue(nil)
-        }
+        self.tooltipStackView.removeAllArrangedSubviews()
+        self.tooltipView.isHidden = true
+        self.lineChartView.highlightValue(nil)
     }
 }
 

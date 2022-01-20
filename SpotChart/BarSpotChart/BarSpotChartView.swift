@@ -268,7 +268,7 @@ public class BarSpotChartView: UIView {
     }
 }
 
-extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate{
+extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return legends.count
@@ -276,7 +276,7 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
-        let legend = legends[indexPath.row]
+        let legend = legends[indexPath.item]
         cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
@@ -288,6 +288,16 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
             legends[indexPath.item].isEnable.toggle()
         }
         reloadChart()
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = legends[indexPath.item].key
+        label.sizeToFit()
+        let widthSize = label.frame.width + 20
+        return CGSize(width: widthSize, height: 25)
     }
     
     func reloadChart(){
@@ -315,11 +325,9 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     }
     
     func updateLegend() {
-        DispatchQueue.main.async { [self] in
-            legendCollectionView.reloadData()
-            let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-            legendCollectionViewHeightConstraint.constant = height
-        }
+        legendCollectionView.reloadData()
+        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+        legendCollectionViewHeightConstraint.constant = height
     }
 }
 
@@ -332,6 +340,9 @@ extension BarSpotChartView : ChartViewDelegate{
         }else{
             setTooltipPostion(position: .left)
         }
+        let selectedColor = chartView.data?.dataSets[highlight.dataSetIndex].colors.first ?? UIColor.lightGray
+        let marker = CircleMarker(color: selectedColor)
+        barChartView.marker = marker
         setTooltip(index: Int(entry.x))
     }
     
@@ -340,11 +351,9 @@ extension BarSpotChartView : ChartViewDelegate{
     }
     
     func resetSelectedChart(){
-        DispatchQueue.main.async {[self] in
-            self.tooltipStackView.removeAllArrangedSubviews()
-            self.tooltipView.isHidden = true
-            self.barChartView.highlightValue(nil)
-        }
+        self.tooltipStackView.removeAllArrangedSubviews()
+        self.tooltipView.isHidden = true
+        self.barChartView.highlightValue(nil)
     }
     
     
