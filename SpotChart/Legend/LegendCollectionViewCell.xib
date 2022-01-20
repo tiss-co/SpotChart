@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,47 +12,61 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="LegendCollectionViewCell" customModule="SpotChart" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="174" height="49"/>
+            <rect key="frame" x="0.0" y="0.0" width="174" height="25"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="174" height="49"/>
+                <rect key="frame" x="0.0" y="0.0" width="174" height="25"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRo-t7-Seh">
-                        <rect key="frame" x="12" y="18.5" width="12" height="12"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="12" id="00p-wU-2bF"/>
-                            <constraint firstAttribute="height" constant="12" id="K3b-dX-Osb"/>
-                        </constraints>
-                    </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="a5T-eA-KIy">
-                        <rect key="frame" x="34" y="0.0" width="130" height="49"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="3gR-gb-Nzr"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gMk-q9-MCc">
+                        <rect key="frame" x="10" y="0.0" width="154" height="25"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRo-t7-Seh">
+                                <rect key="frame" x="0.0" y="6.5" width="12" height="12"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="00p-wU-2bF"/>
+                                    <constraint firstAttribute="height" constant="12" id="K3b-dX-Osb"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="175-qc-QrC">
+                                <rect key="frame" x="14.5" y="6.5" width="6" height="12"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="Oby-PT-wFd"/>
+                                    <constraint firstAttribute="width" constant="6" id="SmI-zl-TJC"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="a5T-eA-KIy">
+                                <rect key="frame" x="17" y="0.0" width="137" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="3gR-gb-Nzr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="a5T-eA-KIy" secondAttribute="trailing" constant="10" id="B4x-Hv-1zd"/>
-                <constraint firstItem="lRo-t7-Seh" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Ni9-cj-T9N"/>
-                <constraint firstAttribute="bottom" secondItem="a5T-eA-KIy" secondAttribute="bottom" id="b2s-Gd-FI8"/>
-                <constraint firstItem="lRo-t7-Seh" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="drQ-d1-d40"/>
-                <constraint firstItem="a5T-eA-KIy" firstAttribute="leading" secondItem="lRo-t7-Seh" secondAttribute="trailing" constant="10" id="jUS-Db-bPK"/>
-                <constraint firstItem="a5T-eA-KIy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jpm-H8-qkV"/>
+                <constraint firstAttribute="bottom" secondItem="gMk-q9-MCc" secondAttribute="bottom" id="61Q-ku-h8y"/>
+                <constraint firstItem="gMk-q9-MCc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="Au5-iJ-11Q"/>
+                <constraint firstItem="gMk-q9-MCc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="SLd-4v-AMd"/>
+                <constraint firstAttribute="trailing" secondItem="gMk-q9-MCc" secondAttribute="trailing" constant="10" id="TFd-1y-kCe"/>
             </constraints>
             <size key="customSize" width="174" height="49"/>
             <connections>
                 <outlet property="legendStatusHeightConstraint" destination="K3b-dX-Osb" id="0vs-qS-fEh"/>
                 <outlet property="legendStatusView" destination="lRo-t7-Seh" id="Xoj-yh-L69"/>
+                <outlet property="legendStatusWidthConstraint" destination="00p-wU-2bF" id="O3C-pK-qV6"/>
+                <outlet property="secondLegendStatusView" destination="175-qc-QrC" id="Mbu-wT-pBc"/>
+                <outlet property="secondLegendStatusViewConstraint" destination="Oby-PT-wFd" id="D9q-fP-3M8"/>
                 <outlet property="titleLabel" destination="a5T-eA-KIy" id="PGe-yN-v1C"/>
             </connections>
-            <point key="canvasLocation" x="227.536231884058" y="103.45982142857143"/>
+            <point key="canvasLocation" x="221.73913043478262" y="104.79910714285714"/>
         </collectionViewCell>
     </objects>
     <resources>

@@ -3,16 +3,23 @@ import UIKit
 class LegendCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var legendStatusView: UIView!
+    @IBOutlet weak var secondLegendStatusView: UIView!
     @IBOutlet weak var legendStatusHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var legendStatusWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var secondLegendStatusViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    let legendWidth: CGFloat = 12
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        secondLegendStatusView.isHidden = true
     }
     
     func getDate(legendModel: LegendModel) {
-        legendStatusView.backgroundColor = legendModel.isEnable ? legendModel.color : legendModel.color.withAlphaComponent(0.3)
+        let legendColor = legendModel.isEnable ? legendModel.color : legendModel.color.withAlphaComponent(0.3)
+        legendStatusView.backgroundColor = legendColor
+        secondLegendStatusView.backgroundColor = legendColor
         titleLabel.text = legendModel.key
         titleLabel.textColor = legendModel.isEnable ? titleLabel.textColor : titleLabel.textColor.withAlphaComponent(0.3)
     }
@@ -31,14 +38,27 @@ class LegendCollectionViewCell: UICollectionViewCell {
     func setupLengendShape(legendShape: LengendStatusShapeEnum){
         switch legendShape {
         case .circle:
-            legendStatusHeightConstraint.constant = legendStatusView.frame.width
-            legendStatusView.layer.cornerRadius = legendStatusView.frame.height / 2
+            legendStatusHeightConstraint.constant = legendWidth
+            legendStatusWidthConstraint.constant = legendWidth
+            legendStatusView.layer.cornerRadius = legendWidth / 2
+            secondLegendStatusView.isHidden = true
         case .rectangle:
-            legendStatusHeightConstraint.constant = legendStatusView.frame.width / 4
-            legendStatusView.layer.cornerRadius = 0
+            legendStatusHeightConstraint.constant = legendWidth / 4
+            legendStatusWidthConstraint.constant = legendWidth
+            legendStatusView.layer.cornerRadius = legendWidth / 8
+            secondLegendStatusView.isHidden = true
         case .square:
-            legendStatusHeightConstraint.constant = legendStatusView.frame.width
-            legendStatusView.layer.cornerRadius = legendStatusView.frame.height / 4
+            legendStatusHeightConstraint.constant = legendWidth
+            legendStatusWidthConstraint.constant = legendWidth
+            legendStatusView.layer.cornerRadius = legendWidth / 4
+            secondLegendStatusView.isHidden = true
+        case .striped:
+            legendStatusHeightConstraint.constant = legendWidth / 4
+            legendStatusWidthConstraint.constant = legendWidth / 2
+            legendStatusView.layer.cornerRadius = legendWidth / 8
+            secondLegendStatusViewConstraint.constant = legendWidth / 4
+            secondLegendStatusView.layer.cornerRadius = legendWidth / 8
+            secondLegendStatusView.isHidden = false
         }
     }
 }
@@ -55,4 +75,5 @@ public enum LengendStatusShapeEnum {
     case circle
     case rectangle
     case square
+    case striped
 }
