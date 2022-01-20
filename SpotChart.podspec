@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name          = "SpotChart"
-  spec.version       = "0.0.13"
+  spec.version       = "0.0.14"
   spec.summary       = "Customizable Charts"
 
   spec.homepage      = "https://github.com/boof-tech/SpotChart"
@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.license       = { :type => "MIT" }
   spec.author        = { "Boof.tech" => "info@boof.tech" }
   spec.platform      = :ios, "11.0"
-  spec.source        = { :git => 'https://github.com/tiss-co/SpotChart.git', :tag => '0.0.13'}
+  spec.source        = { :git => 'https://github.com/tiss-co/SpotChart.git', :tag => '0.0.14'}
   spec.dependency "Charts"
   spec.source_files  = "SpotChart/**/*.{swift,xib}"
 end
