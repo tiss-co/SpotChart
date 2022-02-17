@@ -122,17 +122,15 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
-        setAxisTitle()
-        setupAxisFormatter()
-        setupCollectionView()
-        setupRemovedTooltipGesture()
-        setupUI()
-        setupLineChartDelegate()
+        setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setup()
+    }
+    
+    func setup() {
         commonInit()
         setAxisTitle()
         setupAxisFormatter()
@@ -292,6 +290,8 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     
     func reloadChart(){
         lineChartView.highlightValue(nil)
+        tooltipStackView.removeAllArrangedSubviews()
+        tooltipView.isHidden = true
         lineChartView.data = nil
         let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
         if dataSets.isEmpty {
@@ -317,7 +317,9 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
 
 extension LineSpotChartView : ChartViewDelegate{
     //MARK: - chart selected
-    public func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+    public func chartValueSelected(_ chartView: ChartViewBase,
+                                   entry: ChartDataEntry,
+                                   highlight: Highlight) {
         if highlight.xPx > self.frame.midX {
             setTooltipPostion(position: .right)
         }else{
@@ -459,9 +461,10 @@ extension LineSpotChartView {
     func addEnableDataToTooltip(stackView: inout [UIView],
                                 index: Int,
                                 lineModel: LineSpotChartModel){
+        print("legend", lineModel.legend.key, lineModel.legend.isEnable)
         if Int(lineModel.data.xMax) < index,
-           Int(lineModel.data.xMin) > index,
-           lineModel.legend.isEnable  { return }
+           Int(lineModel.data.xMin) > index { return }
+        if !lineModel.legend.isEnable { return }
         let titleLbl = UILabel()
         titleLbl.font = tooltipTitleFont
         titleLbl.textColor = tooltipTextColor
