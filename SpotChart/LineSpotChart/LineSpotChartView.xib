@@ -62,15 +62,15 @@
                                         <constraint firstItem="ShT-vJ-Heo" firstAttribute="top" secondItem="zzS-kr-TTk" secondAttribute="top" constant="5" id="xaf-4O-lPu"/>
                                     </constraints>
                                 </view>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNG-G2-NsE">
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNG-G2-NsE">
                                     <rect key="frame" x="323" y="257" width="30" height="30"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="GDu-SW-qcV"/>
                                         <constraint firstAttribute="height" constant="30" id="Y2w-em-vrQ"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="zoom-reset" cornerStyle="medium"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="zoom-reset.png"/>
                                     <connections>
                                         <action selector="resetZoomButtonPressed:" destination="-1" eventType="touchUpInside" id="9mQ-Bo-3eV"/>
                                     </connections>
@@ -134,7 +134,7 @@
         </view>
     </objects>
     <resources>
-        <image name="zoom-reset" width="20" height="20"/>
+        <image name="zoom-reset.png" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
