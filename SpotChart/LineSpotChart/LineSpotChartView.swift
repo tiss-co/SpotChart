@@ -21,7 +21,8 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     @IBOutlet weak var tooltipStackView: UIStackView!
     @IBOutlet weak var tooltipRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
-    
+    @IBOutlet weak var resetZoomButton: UIButton!
+    @IBOutlet weak var rightResetZoomConstraint: NSLayoutConstraint!
     
     public var data: [LineSpotChartModel] = []
     
@@ -156,11 +157,12 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     }
     
     func setupUI(){
-        self.tooltipView.layer.cornerRadius = 8
-        self.tooltipView.backgroundColor = tooltipBackgroundColor.withAlphaComponent(0.6)
-        self.tooltipStackView.backgroundColor = .clear
-        self.rightAxisLabel.font = rightAxisTitleFont
-        self.leftAxisLabel.font = leftAxisTitleFont
+        tooltipView.layer.cornerRadius = 8
+        tooltipView.backgroundColor = tooltipBackgroundColor.withAlphaComponent(0.6)
+        tooltipStackView.backgroundColor = .clear
+        rightAxisLabel.font = rightAxisTitleFont
+        leftAxisLabel.font = leftAxisTitleFont
+        resetZoomButton.layer.cornerRadius = resetZoomButton.frame.height / 2
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){
@@ -254,6 +256,13 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         }
         return dates
     }
+    
+    @IBAction func resetZoomButtonPressed(_ sender: Any) {
+        lineChartView.zoom(scaleX: 0, scaleY: 0, x: 0, y: 0)
+        reloadChart()
+        resetZoomButton.isHidden = true
+    }
+    
 }
 
 extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
@@ -314,8 +323,7 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     }
 }
 
-
-extension LineSpotChartView : ChartViewDelegate{
+extension LineSpotChartView: ChartViewDelegate{
     //MARK: - chart selected
     public func chartValueSelected(_ chartView: ChartViewBase,
                                    entry: ChartDataEntry,
@@ -365,11 +373,15 @@ extension LineSpotChartView {
     
     func setXAxisLabelCount(scaleX: CGFloat = 1.0, scaleY: CGFloat = 1.0){
         let range = calcuteRengeDates()
-        if range <= 1{
+        print("scaleX", scaleX, "scaleY", scaleY)
+        let zoomOutCondition = scaleX == 1 && scaleY == 1
+        resetZoomButton.isHidden = zoomOutCondition
+        rightResetZoomConstraint.constant = lineChartView.extraRightOffset + 25.0
+        if range <= 1 {
             lineChartView.xAxis.setLabelCount(4, force: true)
             return
         }
-        if scaleX == 1 && scaleY == 1{
+        if zoomOutCondition {
             setZoomOutCountXAxis()
         }else{
             lineChartView.xAxis.setLabelCount(2, force: true)
@@ -409,7 +421,6 @@ extension LineSpotChartView {
         return countDates
     }
 }
-
 
 //MARK: Tooltip
 extension LineSpotChartView {

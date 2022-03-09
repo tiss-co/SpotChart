@@ -19,8 +19,10 @@
                 <outlet property="legendCollectionViewHeightConstraint" destination="2Jj-Lz-3cn" id="Qaw-7P-uUs"/>
                 <outlet property="lineChartView" destination="5ZL-Ct-JxL" id="bfs-bK-m4a"/>
                 <outlet property="lineChartViewHeightConstraint" destination="Gp0-PU-lcO" id="Jeg-1b-fKE"/>
+                <outlet property="resetZoomButton" destination="yNG-G2-NsE" id="OeK-Cq-K2f"/>
                 <outlet property="rightAxisLabel" destination="S40-IX-I9r" id="RfW-vX-NO7"/>
                 <outlet property="rightAxisTrailingConstraint" destination="ATS-kR-vYb" id="zT4-pA-PIY"/>
+                <outlet property="rightResetZoomConstraint" destination="ozd-Ds-aN4" id="qJ3-NI-oeL"/>
                 <outlet property="tooltipRightConstraint" destination="Wd1-Xv-WEp" id="M1b-V2-jbJ"/>
                 <outlet property="tooltipStackView" destination="ShT-vJ-Heo" id="YL5-th-Vj5"/>
                 <outlet property="tooltipView" destination="zzS-kr-TTk" id="J0U-l6-4wB"/>
@@ -60,11 +62,26 @@
                                         <constraint firstItem="ShT-vJ-Heo" firstAttribute="top" secondItem="zzS-kr-TTk" secondAttribute="top" constant="5" id="xaf-4O-lPu"/>
                                     </constraints>
                                 </view>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNG-G2-NsE">
+                                    <rect key="frame" x="323" y="257" width="30" height="30"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="GDu-SW-qcV"/>
+                                        <constraint firstAttribute="height" constant="30" id="Y2w-em-vrQ"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="zoom-reset" cornerStyle="medium"/>
+                                    <connections>
+                                        <action selector="resetZoomButtonPressed:" destination="-1" eventType="touchUpInside" id="9mQ-Bo-3eV"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="yNG-G2-NsE" secondAttribute="bottom" constant="13" id="EVw-54-0AI"/>
                                 <constraint firstAttribute="height" constant="300" id="Gp0-PU-lcO"/>
                                 <constraint firstAttribute="trailing" secondItem="zzS-kr-TTk" secondAttribute="trailing" constant="40" id="Wd1-Xv-WEp"/>
+                                <constraint firstAttribute="trailing" secondItem="yNG-G2-NsE" secondAttribute="trailing" constant="25" id="ozd-Ds-aN4"/>
                                 <constraint firstItem="zzS-kr-TTk" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="top" constant="10" id="r8e-lk-feJ"/>
                             </constraints>
                         </view>
@@ -117,6 +134,7 @@
         </view>
     </objects>
     <resources>
+        <image name="zoom-reset" width="20" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
