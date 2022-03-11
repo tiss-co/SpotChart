@@ -340,9 +340,7 @@ extension BarSpotChartView : ChartViewDelegate{
         }else{
             setTooltipPostion(position: .left)
         }
-        let selectedColor = chartView.data?.dataSets[highlight.dataSetIndex].colors.first ?? UIColor.lightGray
-        let marker = CircleMarker(color: selectedColor)
-        barChartView.marker = marker
+        barChartView.marker = nil
         setTooltip(index: Int(entry.x))
     }
     

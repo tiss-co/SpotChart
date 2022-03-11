@@ -63,7 +63,7 @@
                                     </constraints>
                                 </view>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNG-G2-NsE">
-                                    <rect key="frame" x="323" y="257" width="30" height="30"/>
+                                    <rect key="frame" x="318" y="250" width="30" height="30"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="GDu-SW-qcV"/>
@@ -78,10 +78,10 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="yNG-G2-NsE" secondAttribute="bottom" constant="13" id="EVw-54-0AI"/>
+                                <constraint firstAttribute="bottom" secondItem="yNG-G2-NsE" secondAttribute="bottom" constant="20" id="EVw-54-0AI"/>
                                 <constraint firstAttribute="height" constant="300" id="Gp0-PU-lcO"/>
                                 <constraint firstAttribute="trailing" secondItem="zzS-kr-TTk" secondAttribute="trailing" constant="40" id="Wd1-Xv-WEp"/>
-                                <constraint firstAttribute="trailing" secondItem="yNG-G2-NsE" secondAttribute="trailing" constant="25" id="ozd-Ds-aN4"/>
+                                <constraint firstAttribute="trailing" secondItem="yNG-G2-NsE" secondAttribute="trailing" constant="30" id="ozd-Ds-aN4"/>
                                 <constraint firstItem="zzS-kr-TTk" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="top" constant="10" id="r8e-lk-feJ"/>
                             </constraints>
                         </view>

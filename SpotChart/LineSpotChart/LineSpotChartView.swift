@@ -163,6 +163,10 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         rightAxisLabel.font = rightAxisTitleFont
         leftAxisLabel.font = leftAxisTitleFont
         resetZoomButton.layer.cornerRadius = resetZoomButton.frame.height / 2
+        resetZoomButton.layer.shadowColor = UIColor.lightGray.cgColor
+        resetZoomButton.layer.shadowRadius = 5
+        resetZoomButton.layer.shadowOpacity = 0.7
+        resetZoomButton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){
@@ -319,7 +323,6 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
         self.layoutSubviews()
         let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
         legendCollectionViewHeightConstraint.constant = height
-        print("Spot Chart: \(data.first?.legend.key ?? "") height is: \(height)")
     }
 }
 
@@ -373,15 +376,17 @@ extension LineSpotChartView {
     
     func setXAxisLabelCount(scaleX: CGFloat = 1.0, scaleY: CGFloat = 1.0){
         let range = calcuteRengeDates()
-        print("scaleX", scaleX, "scaleY", scaleY)
-        let zoomOutCondition = scaleX == 1 && scaleY == 1
+        let zoomOutCondition = lineChartView.isFullyZoomedOut
         resetZoomButton.isHidden = zoomOutCondition
-        rightResetZoomConstraint.constant = lineChartView.extraRightOffset + 25.0
+        let rightConstraint = lineChartView.rightAxis.enabled ? 35.0 : 0
+        rightResetZoomConstraint.constant = lineChartView.extraRightOffset + rightConstraint
+        let scaleOutCondition = scaleX == 1.0000 && scaleY == 1.0000
         if range <= 1 {
             lineChartView.xAxis.setLabelCount(4, force: true)
             return
         }
-        if zoomOutCondition {
+        
+        if scaleOutCondition {
             setZoomOutCountXAxis()
         }else{
             lineChartView.xAxis.setLabelCount(2, force: true)
@@ -472,7 +477,6 @@ extension LineSpotChartView {
     func addEnableDataToTooltip(stackView: inout [UIView],
                                 index: Int,
                                 lineModel: LineSpotChartModel){
-        print("legend", lineModel.legend.key, lineModel.legend.isEnable)
         if Int(lineModel.data.xMax) < index,
            Int(lineModel.data.xMin) > index { return }
         if !lineModel.legend.isEnable { return }
