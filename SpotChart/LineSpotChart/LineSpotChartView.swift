@@ -501,7 +501,7 @@ extension LineSpotChartView {
         unitLabel.font = tooltipUnitFont
         unitLabel.textColor = tooltipTextColor
         unitLabel.textAlignment = .left
-        unitLabel.text = " " + tootTipItemsUnit
+        unitLabel.text = " " + lineModel.unit
         let unitWidth = unitLabel.intrinsicContentSize.width
         unitLabel.widthAnchor.constraint(equalToConstant: unitWidth).isActive = true
         let vStack = UIStackView(arrangedSubviews: [titleLbl,valueLbl,unitLabel])
@@ -546,4 +546,3 @@ extension LineSpotChartView {
         case left
     }
 }
-
