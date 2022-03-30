@@ -70,7 +70,7 @@
                                         <constraint firstAttribute="height" constant="30" id="Y2w-em-vrQ"/>
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="zoom-reset.png"/>
+                                    <state key="normal" image="zoom_reset.png"/>
                                     <connections>
                                         <action selector="resetZoomButtonPressed:" destination="-1" eventType="touchUpInside" id="9mQ-Bo-3eV"/>
                                     </connections>
@@ -134,7 +134,7 @@
         </view>
     </objects>
     <resources>
-        <image name="zoom-reset.png" width="20" height="20"/>
+        <image name="zoom_reset.png" width="60" height="60"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
