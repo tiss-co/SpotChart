@@ -31,6 +31,7 @@
 		297C06AD25FFA01E004467C1 /* LineSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */; };
 		297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06B82600CBF9004467C1 /* LegendModel.swift */; };
 		29F0B6F2265F958000812B73 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0B6F1265F958000812B73 /* BarViewController.swift */; };
+		29F6860C27F481B5009B7222 /* zoom_reset.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F6860927F47882009B7222 /* zoom_reset.png */; };
 		7AB16EDCB4FEF04CEC2E7020 /* Pods_SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F18768680EFE169CE7A79B3 /* Pods_SpotChart.framework */; };
 /* End PBXBuildFile section */
 
@@ -454,6 +455,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29F6860C27F481B5009B7222 /* zoom_reset.png in Resources */,
 				2945BB28264C009D00D0EB3D /* BarSpotChartView.xib in Resources */,
 				297C066A25FF661F004467C1 /* LineSpotChartView.xib in Resources */,
 				297C068D25FF783F004467C1 /* LegendCollectionViewCell.xib in Resources */,
