@@ -96,7 +96,6 @@
 		297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpotChartModel.swift; sourceTree = "<group>"; };
 		297C06B82600CBF9004467C1 /* LegendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendModel.swift; sourceTree = "<group>"; };
 		29F0B6F1265F958000812B73 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
-		29F6860927F47882009B7222 /* zoom_reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_reset.png; sourceTree = "<group>"; };
 		3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChartExample.release.xcconfig"; path = "Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample.release.xcconfig"; sourceTree = "<group>"; };
 		42BAB7BCCE26B56CC8CA6179 /* Pods-SpotChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart.release.xcconfig"; path = "Target Support Files/Pods-SpotChart/Pods-SpotChart.release.xcconfig"; sourceTree = "<group>"; };
 		4CDBBA8396A52EA856AABAC6 /* Pods_SpotChartExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SpotChartExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,7 +261,6 @@
 		298091C427D94FD10051F5DA /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				29F6860927F47882009B7222 /* zoom_reset.png */,
 			);
 			path = Support;
 			sourceTree = "<group>";

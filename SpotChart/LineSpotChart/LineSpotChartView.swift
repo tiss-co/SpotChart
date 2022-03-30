@@ -77,6 +77,12 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         }
     }
     
+    public var zoomOutImage = UIImage(named: "magnifyingglass.circle") {
+        didSet {
+            resetZoomButton.setImage(zoomOutImage, for: .normal)
+        }
+    }
+    
     //MARK:- Tooltip section properties
     private var tooltipStackViewTag: Int = 666333
     public var tooltipBackgroundColor: UIColor = UIColor.lightGray.withAlphaComponent(0.6) {
