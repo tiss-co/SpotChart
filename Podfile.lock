@@ -1,7 +1,7 @@
 PODS:
-  - Charts (4.0.2):
-    - Charts/Core (= 4.0.2)
-  - Charts/Core (4.0.2):
+  - Charts (4.0.3):
+    - Charts/Core (= 4.0.3)
+  - Charts/Core (4.0.3):
     - SwiftAlgorithms (~> 1.0)
   - SwiftAlgorithms (1.0.0)
 
@@ -14,7 +14,7 @@ SPEC REPOS:
     - SwiftAlgorithms
 
 SPEC CHECKSUMS:
-  Charts: cfa4e911e6dc289582c2fe011a0e87c03d96727f
+  Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
 PODFILE CHECKSUM: b193c00b8870b8ca91bc7d6dc0044bcccf28f3f0
