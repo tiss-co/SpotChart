@@ -21,7 +21,7 @@ public class LineSpotChartView: UIView, AxisValueFormatter {
     @IBOutlet weak var tooltipStackView: UIStackView!
     @IBOutlet weak var tooltipRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var resetZoomButton: UIButton!
+    @IBOutlet public weak var resetZoomButton: UIButton!
     @IBOutlet weak var rightResetZoomConstraint: NSLayoutConstraint!
     
     public var data: [LineSpotChartModel] = []
@@ -31,6 +31,10 @@ public class LineSpotChartView: UIView, AxisValueFormatter {
     
     public func reload() {
         reloadChart()
+    }
+    
+    public func reloadLegend() {
+        updateLegend()
     }
     
     public func setRangeDate(start: Date, end: Date) {
@@ -109,7 +113,7 @@ public class LineSpotChartView: UIView, AxisValueFormatter {
     public var dayAxisLabelFormat: String = "d.MMM"
     public var hourAxisLabelFormat: String = "HH:mm"
     
-    public var legendTitleFont: UIFont = UIFont.systemFont(ofSize: 13) {
+    public var legendTitleFont: UIFont = UIFont.systemFont(ofSize: 16) {
         didSet {
             self.legendCollectionView.layoutSubviews()
         }
@@ -284,7 +288,10 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
         let legend = data[indexPath.item].legend
-        cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
+        cell.setupUI(backgroundColor: .clear,
+                     textColor: legendTitleColor,
+                     textFont: legendTitleFont,
+                     legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
     }
@@ -300,12 +307,20 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = data[indexPath.item].legend.key
-        label.sizeToFit()
-        let widthSize = label.frame.width + 20
+        let legend = data[indexPath.item].legend
+        let text = legend.key ?? ""
+        let size = text.size(withAttributes:[.font: legendTitleFont])
+        let space = legend.legendShape == .circle ? 40.0 : 45.0
+        let widthSize = size.width + space
         return CGSize(width: widthSize, height: 25)
     }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
+
     
     func reloadChart(){
         lineChartView.highlightValue(nil)
@@ -313,6 +328,22 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
         tooltipView.isHidden = true
         lineChartView.data = nil
         let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
+        let isLeftAxisEnabled = dataSets.contains(where: { $0.axisDependency == .left })
+        lineChartView.leftAxis.enabled = isLeftAxisEnabled
+        leftAxisLabel.isHidden = !isLeftAxisEnabled
+        let isRightAxisEnabled = dataSets.contains(where: { $0.axisDependency == .right })
+        lineChartView.rightAxis.enabled = isRightAxisEnabled
+        rightAxisLabel.isHidden = !isRightAxisEnabled
+        if !isLeftAxisEnabled && isRightAxisEnabled {
+            lineChartView.rightAxis.gridColor = UIColor.lightGray
+            lineChartView.rightAxis.gridLineDashLengths = [4,4]
+            lineChartView.extraLeftOffset = 15
+            lineChartView.extraRightOffset = 0
+        } else {
+            lineChartView.rightAxis.gridColor = UIColor.clear
+            lineChartView.extraLeftOffset = 0
+            lineChartView.extraRightOffset = 0
+        }
         if dataSets.isEmpty {
             updateLegend()
             return
@@ -324,11 +355,9 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     }
     
     func updateLegend() {
-        legendCollectionView.invalidateIntrinsicContentSize()
         legendCollectionView.reloadData()
-        self.layoutSubviews()
-        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-        legendCollectionViewHeightConstraint.constant = height
+        let height = self.legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+        self.legendCollectionViewHeightConstraint.constant = height
     }
 }
 
@@ -389,6 +418,7 @@ extension LineSpotChartView {
         let scaleOutCondition = scaleX == 1.0000 && scaleY == 1.0000
         if range <= 1 {
             lineChartView.xAxis.setLabelCount(4, force: true)
+            isEnableZoomDelegation(true)
             return
         }
         
@@ -483,6 +513,7 @@ extension LineSpotChartView {
     func addEnableDataToTooltip(stackView: inout [UIView],
                                 index: Int,
                                 lineModel: LineSpotChartModel){
+        if lineModel.data.isEmpty { return }
         if Int(lineModel.data.xMax) < index,
            Int(lineModel.data.xMin) > index { return }
         if !lineModel.legend.isEnable { return }

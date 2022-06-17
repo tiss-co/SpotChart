@@ -50,6 +50,11 @@ public class BarSpotChartView: UIView {
             
         }
     }
+    public var barWidth: Double = 50 {
+        didSet {
+            barChartView.barData?.barWidth = barWidth
+        }
+    }
     
     public var isRoundedValue: Bool = false
     
@@ -277,7 +282,10 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
         let legend = legends[indexPath.item]
-        cell.setupUI(backgroundColor: .clear, textColor: legendTitleColor, textFont: legendTitleFont, legendShape: legend.legendShape)
+        cell.setupUI(backgroundColor: .clear,
+                     textColor: legendTitleColor,
+                     textFont: legendTitleFont,
+                     legendShape: legend.legendShape)
         cell.getDate(legendModel: legend)
         return cell
     }
@@ -293,11 +301,18 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = legends[indexPath.item].key
-        label.sizeToFit()
-        let widthSize = label.frame.width + 20
+        let legend = legends[indexPath.item]
+        let text = legend.key ?? ""
+        let size = text.size(withAttributes:[.font: legendTitleFont])
+        let space = legend.legendShape == .circle ? 40.0 : 45.0
+        let widthSize = size.width + space
         return CGSize(width: widthSize, height: 25)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
     
     func reloadChart(){
@@ -322,6 +337,11 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
         data.setDrawValues(false)
         barChartView.data = data
         updateLegend()
+        updateBarWidth()
+    }
+    
+    func updateBarWidth() {
+        barChartView.barData?.barWidth = barWidth
     }
     
     func updateLegend() {
