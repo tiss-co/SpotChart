@@ -9,7 +9,7 @@ class LegendCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var secondLegendStatusViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleLabel: UILabel!
     
-    let legendWidth: CGFloat = 12
+    let legendWidth: CGFloat = 10
     
     override func awakeFromNib() {
         super.awakeFromNib()
