@@ -5,7 +5,7 @@ public final class SpotChartFrameworkBundle {
     public static let main: Bundle = Bundle(for: SpotChartFrameworkBundle.self)
 }
 
-public class LineSpotChartView: UIView, AxisValueFormatter {
+public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet var contentainerView: UIView!

@@ -47,7 +47,7 @@ extension Int{
 
 extension BarChartView {
 
-    private class BarChartFormatter: NSObject, AxisValueFormatter {
+    private class BarChartFormatter: NSObject, IAxisValueFormatter {
         
         var labels: [String] = []
         
@@ -65,7 +65,7 @@ extension BarChartView {
     func setBarChartData(xValues: [String]) {
         let chartFormatter = BarChartFormatter(labels: xValues)
         let xAxis = XAxis()
-        xAxis.valueFormatter = chartFormatter as AxisValueFormatter
+        xAxis.valueFormatter = chartFormatter as IAxisValueFormatter
         self.xAxis.valueFormatter = xAxis.valueFormatter
     }
 }
