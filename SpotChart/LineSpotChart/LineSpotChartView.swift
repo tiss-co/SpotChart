@@ -280,14 +280,42 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
 }
 
 extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
-    
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        let peakLegend = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }
+        return peakLegend.isEmpty ? 1 : 2
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView,
+                               numberOfItemsInSection section: Int) -> Int {
+        let normalLegendCount = data.filter{
+            $0.legend.isPeak == false && $0.legend.isWindow == false
+        }.count
+        
+        let peakCount = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }.count
+        
+        if section == 0 {
+            return normalLegendCount
+        } else {
+            return peakCount
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = legendCollectionView.dequeueReusableCell(withReuseIdentifier: LegendCollectionViewCell.nameOfClass, for: indexPath) as! LegendCollectionViewCell
-        let legend = data[indexPath.item].legend
+        var AllData = [[LineSpotChartModel]]()
+        let normalLegend = data.filter{
+            $0.legend.isPeak == false && $0.legend.isWindow == false
+        }
+        let peakLegend = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }
+        AllData = [normalLegend, peakLegend]
+        let legend = AllData[indexPath.section][indexPath.item].legend
         cell.setupUI(backgroundColor: .clear,
                      textColor: legendTitleColor,
                      textFont: legendTitleFont,
@@ -298,21 +326,40 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.tooltipView.isHidden = true
-        if data.indices.contains(indexPath.item) {
-            data[indexPath.item].legend.isEnable.toggle()
+        var AllData = [[LineSpotChartModel]]()
+        let normalLegend = data.filter{
+            $0.legend.isPeak == false && $0.legend.isWindow == false
         }
+        let peakLegend = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }
+        AllData = [normalLegend, peakLegend]
+        let itemSelected = AllData[indexPath.section][indexPath.item]
+        guard let indexSelected = data.firstIndex(where: { item in
+            item.legend.key == itemSelected.legend.key
+        }) else { return }
+        data[indexSelected].legend.isEnable.toggle()
         reloadChart()
     }
     
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let legend = data[indexPath.item].legend
+        var AllData = [[LineSpotChartModel]]()
+        let normalLegend = data.filter{
+            $0.legend.isPeak == false && $0.legend.isWindow == false
+        }
+        let peakLegend = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }
+        AllData = [normalLegend, peakLegend]
+        let legend = AllData[indexPath.section][indexPath.item].legend
         let text = legend.key ?? ""
         let size = text.size(withAttributes:[.font: legendTitleFont])
-        let space = legend.legendShape == .circle ? 40.0 : 45.0
+        var space = 45.0
+        if legend.legendShape.rawValue == LengendStatusShapeEnum.circle.rawValue { space = 40.0 }
         let widthSize = size.width + space
-        return CGSize(width: widthSize, height: 25)
+        return CGSize(width: widthSize, height: 40)
     }
     
     public func collectionView(_ collectionView: UICollectionView,
@@ -339,10 +386,14 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
             lineChartView.rightAxis.gridLineDashLengths = [4,4]
             lineChartView.extraLeftOffset = 15
             lineChartView.extraRightOffset = 0
+        } else if isLeftAxisEnabled && isRightAxisEnabled {
+            lineChartView.rightAxis.gridColor = UIColor.clear
+            lineChartView.extraLeftOffset = 0
+            lineChartView.extraRightOffset =  0
         } else {
             lineChartView.rightAxis.gridColor = UIColor.clear
             lineChartView.extraLeftOffset = 0
-            lineChartView.extraRightOffset = 0
+            lineChartView.extraRightOffset = 15
         }
         if dataSets.isEmpty {
             updateLegend()
@@ -351,13 +402,17 @@ extension LineSpotChartView: UICollectionViewDataSource, UICollectionViewDelegat
         let data = LineChartData(dataSets: dataSets)
         data.setDrawValues(false)
         lineChartView.data = data
-        updateLegend()
+        self.updateLegend()
     }
     
     func updateLegend() {
         legendCollectionView.reloadData()
-        let height = self.legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-        self.legendCollectionViewHeightConstraint.constant = height
+        legendCollectionView.layoutIfNeeded()
+        let peakLegend = data.filter{
+            $0.legend.isPeak == true && $0.legend.isWindow == false
+        }
+        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
+        legendCollectionViewHeightConstraint.constant = height
     }
 }
 
@@ -517,22 +572,24 @@ extension LineSpotChartView {
         if Int(lineModel.data.xMax) < index,
            Int(lineModel.data.xMin) > index { return }
         if !lineModel.legend.isEnable { return }
+        if lineModel.legend.isWindow { return }
         let titleLbl = UILabel()
         titleLbl.font = tooltipTitleFont
         titleLbl.textColor = tooltipTextColor
         titleLbl.textAlignment = .left
         titleLbl.text = lineModel.legend.key + ": "
+        
         let valueLbl = UILabel()
         valueLbl.font = tooltipValueFont
         valueLbl.textColor = tooltipTextColor
         valueLbl.textAlignment = .right
-        if lineModel.isRoundedValue {
-            guard let index = lineModel.data.entries.filter { Int($0.x) == index }.first else { return }
-            let value = Int(index.y.rounded())
-            valueLbl.text = String(value.thousandSeprate()!)
+        guard let data = lineModel.data.entries.filter { Int($0.x) == index }.first else { return }
+        let value = data.y
+        if lineModel.isRoundedValue || value > 99 {
+            let valueRounded = Int(value.rounded())
+            valueLbl.text = String(valueRounded.thousandSeprate()!)
         }else{
-            let value = lineModel.data.entries[index/lineModel.step].y
-            valueLbl.text = String(format: "%.2f",value)
+            valueLbl.text = String(format: "%.2f",data.y)
         }
         let unitLabel = UILabel()
         unitLabel.font = tooltipUnitFont
@@ -548,7 +605,7 @@ extension LineSpotChartView {
     
     func presentTooltip(stackView: [UIView]) {
         tooltipStackView.removeAllArrangedSubviews()
-        if stackView.count == 0{
+        if stackView.count == 0 {
             return
         }else{
             tooltipView.isHidden = false
