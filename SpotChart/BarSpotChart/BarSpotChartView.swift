@@ -347,8 +347,25 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     func updateLegend() {
         legendCollectionView.reloadData()
         legendCollectionView.layoutIfNeeded()
-        let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
-        legendCollectionViewHeightConstraint.constant = height
+        updateLayoutInset()
+        legendCollectionViewHeightConstraint.constant = 45
+    }
+    
+    func updateLayoutInset() {
+        DispatchQueue.main.async { [self] in
+            let contentSize = legendCollectionView.contentSize.width
+            var leftInset: CGFloat = 10
+            var rightInset: CGFloat = 10
+            if contentSize < legendCollectionView.frame.width {
+                leftInset = (legendCollectionView.frame.width - contentSize) / 2
+                rightInset = (legendCollectionView.frame.width - contentSize) / 2
+            }
+            
+            legendCollectionView.contentInset = UIEdgeInsets(top: 0,
+                                                             left: leftInset,
+                                                             bottom: 0,
+                                                             right: rightInset)
+        }
     }
 }
 
