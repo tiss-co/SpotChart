@@ -346,6 +346,7 @@ extension BarSpotChartView: UICollectionViewDataSource, UICollectionViewDelegate
     
     func updateLegend() {
         legendCollectionView.reloadData()
+        legendCollectionView.layoutIfNeeded()
         let height = legendCollectionView.collectionViewLayout.collectionViewContentSize.height
         legendCollectionViewHeightConstraint.constant = height
     }

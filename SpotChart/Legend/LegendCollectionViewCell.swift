@@ -71,7 +71,7 @@ extension LegendCollectionViewCell {
     }
 }
 
-public enum LengendStatusShapeEnum {
+public enum LengendStatusShapeEnum: Int {
     case circle
     case rectangle
     case square
