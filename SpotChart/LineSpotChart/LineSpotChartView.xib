@@ -13,16 +13,16 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="TJY-Km-R7b"/>
                 <outlet property="contentainerView" destination="ndW-D4-aok" id="gy9-4B-TCn"/>
+                <outlet property="heightTableViewConstraint" destination="20y-5h-uvU" id="yOp-cI-km3"/>
                 <outlet property="leftAxisLabel" destination="Jyd-IB-yh7" id="CF6-G5-lEu"/>
                 <outlet property="leftAxisleadingConstraint" destination="DeZ-VI-xab" id="iPl-8j-oxy"/>
-                <outlet property="legendCollectionView" destination="ZMP-Ub-zR1" id="YyS-eq-K8B"/>
-                <outlet property="legendCollectionViewHeightConstraint" destination="2Jj-Lz-3cn" id="Qaw-7P-uUs"/>
                 <outlet property="lineChartView" destination="5ZL-Ct-JxL" id="bfs-bK-m4a"/>
                 <outlet property="lineChartViewHeightConstraint" destination="Gp0-PU-lcO" id="Jeg-1b-fKE"/>
                 <outlet property="resetZoomButton" destination="yNG-G2-NsE" id="OeK-Cq-K2f"/>
                 <outlet property="rightAxisLabel" destination="S40-IX-I9r" id="RfW-vX-NO7"/>
                 <outlet property="rightAxisTrailingConstraint" destination="ATS-kR-vYb" id="zT4-pA-PIY"/>
                 <outlet property="rightResetZoomConstraint" destination="ozd-Ds-aN4" id="qJ3-NI-oeL"/>
+                <outlet property="tableView" destination="yWS-aJ-zac" id="Eep-1u-WnX"/>
                 <outlet property="tooltipRightConstraint" destination="Wd1-Xv-WEp" id="M1b-V2-jbJ"/>
                 <outlet property="tooltipStackView" destination="ShT-vJ-Heo" id="YL5-th-Vj5"/>
                 <outlet property="tooltipView" destination="zzS-kr-TTk" id="J0U-l6-4wB"/>
@@ -31,11 +31,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="407"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndW-D4-aok">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="407"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="400"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="L" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyd-IB-yh7">
                             <rect key="frame" x="0.0" y="140" width="9.5" height="20.5"/>
@@ -91,32 +91,27 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZMP-Ub-zR1">
-                            <rect key="frame" x="0.0" y="320" width="414" height="77"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yWS-aJ-zac">
+                            <rect key="frame" x="0.0" y="310" width="414" height="90"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" priority="999" constant="40" id="2Jj-Lz-3cn"/>
+                                <constraint firstAttribute="height" constant="90" id="20y-5h-uvU"/>
                             </constraints>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WrS-hc-paE">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
+                            <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                        </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="yWS-aJ-zac" secondAttribute="bottom" id="5Vh-73-PhT"/>
                         <constraint firstItem="Jyd-IB-yh7" firstAttribute="centerY" secondItem="5ZL-Ct-JxL" secondAttribute="centerY" id="5yU-SM-fVv"/>
                         <constraint firstAttribute="trailing" secondItem="S40-IX-I9r" secondAttribute="trailing" id="ATS-kR-vYb"/>
                         <constraint firstItem="Jyd-IB-yh7" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="DeZ-VI-xab"/>
                         <constraint firstAttribute="trailing" secondItem="5ZL-Ct-JxL" secondAttribute="trailing" constant="18" id="Eby-sa-b8w"/>
                         <constraint firstItem="5ZL-Ct-JxL" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" constant="18" id="GqH-lO-klb"/>
-                        <constraint firstItem="ZMP-Ub-zR1" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="bottom" constant="20" id="HMA-XO-iQd"/>
+                        <constraint firstItem="yWS-aJ-zac" firstAttribute="firstBaseline" secondItem="5ZL-Ct-JxL" secondAttribute="baseline" constant="10" id="Qdf-Qn-w2Z"/>
+                        <constraint firstAttribute="trailing" secondItem="yWS-aJ-zac" secondAttribute="trailing" id="TOe-cB-mUy"/>
                         <constraint firstItem="S40-IX-I9r" firstAttribute="centerY" secondItem="5ZL-Ct-JxL" secondAttribute="centerY" id="Y5c-kt-YJw"/>
-                        <constraint firstItem="ZMP-Ub-zR1" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="Ygc-yr-a04"/>
-                        <constraint firstAttribute="trailing" secondItem="ZMP-Ub-zR1" secondAttribute="trailing" id="bmT-XZ-h7v"/>
-                        <constraint firstAttribute="bottom" secondItem="ZMP-Ub-zR1" secondAttribute="bottom" constant="10" id="jjg-DJ-Nj4"/>
+                        <constraint firstItem="yWS-aJ-zac" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="fJ0-et-HRy"/>
                         <constraint firstItem="5ZL-Ct-JxL" firstAttribute="top" secondItem="ndW-D4-aok" secondAttribute="top" id="paV-u6-5na"/>
                     </constraints>
                 </view>
@@ -130,7 +125,7 @@
                 <constraint firstItem="ndW-D4-aok" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="baE-bV-C0w"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-79.710144927536234" y="78.683035714285708"/>
+            <point key="canvasLocation" x="-79.710144927536234" y="76.339285714285708"/>
         </view>
     </objects>
     <resources>
