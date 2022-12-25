@@ -285,7 +285,7 @@ extension LineSpotChartView {
         tooltipStackView.removeAllArrangedSubviews()
         tooltipView.isHidden = true
         lineChartView.data = nil
-        let dataSets = data.filter{return $0.legend.isEnable}.map{$0.data}
+        let dataSets = data.filter{ return $0.legend.isEnable && $0.data.count != 0 }.map{$0.data}
         let isLeftAxisEnabled = dataSets.contains(where: { $0.axisDependency == .left })
         lineChartView.leftAxis.enabled = isLeftAxisEnabled
         leftAxisLabel.isHidden = !isLeftAxisEnabled

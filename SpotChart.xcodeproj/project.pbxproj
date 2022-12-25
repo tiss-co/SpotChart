@@ -30,6 +30,9 @@
 		297C068D25FF783F004467C1 /* LegendCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 297C068B25FF783F004467C1 /* LegendCollectionViewCell.xib */; };
 		297C06AD25FFA01E004467C1 /* LineSpotChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */; };
 		297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297C06B82600CBF9004467C1 /* LegendModel.swift */; };
+		29CAEFFA2958EAFB0009D3DC /* LineSpotChartView+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEFF72958EAFB0009D3DC /* LineSpotChartView+TableView.swift */; };
+		29CAEFFB2958EAFB0009D3DC /* LegendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CAEFF82958EAFB0009D3DC /* LegendTableViewCell.swift */; };
+		29CAEFFC2958EAFB0009D3DC /* LegendTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CAEFF92958EAFB0009D3DC /* LegendTableViewCell.xib */; };
 		29F0B6F2265F958000812B73 /* BarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F0B6F1265F958000812B73 /* BarViewController.swift */; };
 		7AB16EDCB4FEF04CEC2E7020 /* Pods_SpotChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F18768680EFE169CE7A79B3 /* Pods_SpotChart.framework */; };
 /* End PBXBuildFile section */
@@ -95,6 +98,9 @@
 		297C068B25FF783F004467C1 /* LegendCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LegendCollectionViewCell.xib; sourceTree = "<group>"; };
 		297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSpotChartModel.swift; sourceTree = "<group>"; };
 		297C06B82600CBF9004467C1 /* LegendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendModel.swift; sourceTree = "<group>"; };
+		29CAEFF72958EAFB0009D3DC /* LineSpotChartView+TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LineSpotChartView+TableView.swift"; sourceTree = "<group>"; };
+		29CAEFF82958EAFB0009D3DC /* LegendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendTableViewCell.swift; sourceTree = "<group>"; };
+		29CAEFF92958EAFB0009D3DC /* LegendTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegendTableViewCell.xib; sourceTree = "<group>"; };
 		29F0B6F1265F958000812B73 /* BarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarViewController.swift; sourceTree = "<group>"; };
 		3D81C84F53B7304A904B357E /* Pods-SpotChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChartExample.release.xcconfig"; path = "Target Support Files/Pods-SpotChartExample/Pods-SpotChartExample.release.xcconfig"; sourceTree = "<group>"; };
 		42BAB7BCCE26B56CC8CA6179 /* Pods-SpotChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpotChart.release.xcconfig"; path = "Target Support Files/Pods-SpotChart/Pods-SpotChart.release.xcconfig"; sourceTree = "<group>"; };
@@ -240,6 +246,9 @@
 		297C067C25FF77B9004467C1 /* LineSpotChart */ = {
 			isa = PBXGroup;
 			children = (
+				29CAEFF82958EAFB0009D3DC /* LegendTableViewCell.swift */,
+				29CAEFF92958EAFB0009D3DC /* LegendTableViewCell.xib */,
+				29CAEFF72958EAFB0009D3DC /* LineSpotChartView+TableView.swift */,
 				297C06AC25FFA01E004467C1 /* LineSpotChartModel.swift */,
 				297C062725FF6270004467C1 /* LineSpotChartView.swift */,
 				297C066925FF661F004467C1 /* LineSpotChartView.xib */,
@@ -454,6 +463,7 @@
 			files = (
 				2945BB28264C009D00D0EB3D /* BarSpotChartView.xib in Resources */,
 				297C066A25FF661F004467C1 /* LineSpotChartView.xib in Resources */,
+				29CAEFFC2958EAFB0009D3DC /* LegendTableViewCell.xib in Resources */,
 				297C068D25FF783F004467C1 /* LegendCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,9 +574,11 @@
 				297C062825FF6270004467C1 /* LineSpotChartView.swift in Sources */,
 				292C50D3260239EE003E28F3 /* CircleMarker.swift in Sources */,
 				297C06B92600CBF9004467C1 /* LegendModel.swift in Sources */,
+				29CAEFFB2958EAFB0009D3DC /* LegendTableViewCell.swift in Sources */,
 				297C06AD25FFA01E004467C1 /* LineSpotChartModel.swift in Sources */,
 				297C068C25FF783F004467C1 /* LegendCollectionViewCell.swift in Sources */,
 				297C067125FF67ED004467C1 /* Extension.swift in Sources */,
+				29CAEFFA2958EAFB0009D3DC /* LineSpotChartView+TableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,7 +792,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SpotChart/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -810,7 +822,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SpotChart/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

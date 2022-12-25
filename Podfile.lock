@@ -4,15 +4,21 @@ PODS:
   - Charts/Core (3.6.0)
 
 DEPENDENCIES:
-  - Charts
+  - Charts (from `https://github.com/tiss-co/Charts.git`, branch `fix-app-version`)
 
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Charts
+EXTERNAL SOURCES:
+  Charts:
+    :branch: fix-app-version
+    :git: https://github.com/tiss-co/Charts.git
+
+CHECKOUT OPTIONS:
+  Charts:
+    :commit: 3ddb8076f345e2425e082ad1c07c6620e5c7061c
+    :git: https://github.com/tiss-co/Charts.git
 
 SPEC CHECKSUMS:
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
 
-PODFILE CHECKSUM: 53b89a74822caeacf9db941103d6d875cdbfd8af
+PODFILE CHECKSUM: c2016c321fdf60e4a60f7d93953241e9f7c5ef3c
 
 COCOAPODS: 1.11.3
