@@ -24,7 +24,7 @@ extension LineSpotChartView: UITableViewDataSource {
                                                  for: indexPath) as? LegendTableViewCell
         cell?.config(data: fetchLegendRow(section: indexPath.section),
                      section: indexPath.section)
-        cell?.setupUI(textColor: legendTitleColor, textFont: legendTitleFont)
+        cell?.setupUI(textColor: legendTitleColor, textFont: legendTitleFont, backgroundColor: containerBackgroundColor)
         cell?.delegate = self
         return cell ?? UITableViewCell()
     }

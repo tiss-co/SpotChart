@@ -44,6 +44,14 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         setXAxisLabelCount()
     }
     
+    public var containerBackgroundColor: UIColor = .systemGroupedBackground {
+        didSet {
+            self.contentView.backgroundColor = containerBackgroundColor
+            self.contentainerView.backgroundColor = containerBackgroundColor
+            tableView.backgroundColor = containerBackgroundColor
+        }
+    }
+    
     public var lineChartViewHeight: CGFloat = 300.0 {
         didSet {
             self.lineChartViewHeightConstraint.constant = lineChartViewHeight
@@ -119,7 +127,7 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         }
     }
     
-    public var legendTitleColor: UIColor = UIColor.black {
+    public var legendTitleColor: UIColor = .label {
         didSet {
             tableView.layoutSubviews()
         }

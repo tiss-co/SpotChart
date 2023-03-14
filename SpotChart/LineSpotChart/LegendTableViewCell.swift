@@ -37,9 +37,12 @@ class LegendTableViewCell: UITableViewCell {
     }
     
     func setupUI(textColor: UIColor,
-                 textFont: UIFont) {
+                 textFont: UIFont,
+                 backgroundColor: UIColor) {
         self.textColor = textColor
         self.textFont = textFont
+        self.contentView.backgroundColor = backgroundColor
+        self.legendCollectionView.backgroundColor = backgroundColor
     }
     
     func updateLayoutInset() {
