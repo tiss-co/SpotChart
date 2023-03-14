@@ -24,7 +24,13 @@ public class BarSpotChartView: UIView {
     @IBOutlet weak var tooltipRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     
-    
+    public var containerBackgroundColor: UIColor = .systemGroupedBackground {
+        didSet {
+            self.contentView.backgroundColor = containerBackgroundColor
+            self.contentainerView.backgroundColor = containerBackgroundColor
+            self.legendCollectionView.backgroundColor = containerBackgroundColor
+        }
+    }
     
     public var data: [[Double]] = [] {
         didSet {
