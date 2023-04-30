@@ -5,6 +5,10 @@ public final class SpotChartFrameworkBundle {
     public static let main: Bundle = Bundle(for: SpotChartFrameworkBundle.self)
 }
 
+public protocol SpotChartDelegate: AnyObject {
+    func selectMetersPressed()
+}
+
 public class LineSpotChartView: UIView, IAxisValueFormatter {
     
     @IBOutlet var contentView: UIView!
@@ -23,11 +27,15 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
     @IBOutlet public weak var resetZoomButton: UIButton!
     @IBOutlet weak var rightResetZoomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var selectMetersButton: UIButton!
+    @IBOutlet weak var leadingLegendConstraint: NSLayoutConstraint!
     
     public var data: [LineSpotChartModel] = []
     
     var startDate: Date?
     var endDate: Date?
+    
+    public weak var delegate: SpotChartDelegate?
     
     public func reload() {
         reloadChart()
@@ -42,6 +50,25 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         self.endDate = end
         xValues = createXAxis(startDate: start, endDate: end)
         setXAxisLabelCount()
+    }
+    
+    public var isSelectMetersEnable: Bool = true {
+        didSet {
+            selectMetersButton.isHidden = !isSelectMetersEnable
+            leadingLegendConstraint.constant = isSelectMetersEnable ? 110 : 0
+        }
+    }
+    
+    public var selectMeterIcon = UIImage.init(systemName: "chevron.down") {
+        didSet {
+            selectMetersButton.setImage(selectMeterIcon, for: .normal)
+        }
+    }
+    
+    public var selectMetersFont = UIFont.systemFont(ofSize: 12) {
+        didSet {
+            selectMetersButton.titleLabel?.font = selectMetersFont
+        }
     }
     
     public var containerBackgroundColor: UIColor = .systemGroupedBackground {
@@ -185,6 +212,14 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         resetZoomButton.layer.shadowRadius = 5
         resetZoomButton.layer.shadowOpacity = 0.7
         resetZoomButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        setColorOfSelectMeter()
+    }
+    
+    public func setColorOfSelectMeter() {
+        selectMetersButton.layer.cornerRadius = selectMetersButton.frame.height / 2
+        selectMetersButton.titleLabel?.font = selectMetersFont
+        selectMetersButton.backgroundColor = .tertiarySystemGroupedBackground
+        selectMetersButton.setTitleColor(.label, for: .normal)
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){
@@ -285,6 +320,9 @@ public class LineSpotChartView: UIView, IAxisValueFormatter {
         resetZoomButton.isHidden = true
     }
     
+    @IBAction func selectMetersPressed(_ sender: Any) {
+        delegate?.selectMetersPressed()
+    }
 }
 
 extension LineSpotChartView {
@@ -347,9 +385,16 @@ extension LineSpotChartView: ChartViewDelegate{
         }else{
             setTooltipPostion(position: .left)
         }
-        let selectedColor = chartView.data?.dataSets[highlight.dataSetIndex].colors.first ?? UIColor.lightGray
+        let itemSelected = chartView.data?.dataSets[highlight.dataSetIndex]
+        let selectedColor = itemSelected?.colors.first ?? UIColor.lightGray
         let marker = CircleMarker(color: selectedColor)
         lineChartView.marker = marker
+//        let marker: BalloonMarker = BalloonMarker(color: UIColor(red: 93/255, green: 186/255, blue: 215/255, alpha: 1),
+//                                                  font: UIFont(name: "Helvetica", size: 12)!,
+//                                                  textColor: UIColor.white,
+//                                                  insets: UIEdgeInsets(top: 7.0, left: 7.0, bottom: 25.0, right: 7.0))
+//        marker.minimumSize = CGSize(width: 75.0, height: 35.0)//CGSize(75.0, 35.0)
+//        lineChartView.marker = marker
         setTooltip(index: Int(entry.x))
     }
     
@@ -559,5 +604,127 @@ extension LineSpotChartView {
     enum tooltipPositionEnum {
         case right
         case left
+    }
+}
+
+import CoreGraphics
+
+open class BalloonMarker: MarkerImage {
+    open var color: UIColor?
+    open var arrowSize = CGSize(width: 15, height: 11)
+    open var font: UIFont?
+    open var textColor: UIColor?
+    open var insets = UIEdgeInsets()
+    open var minimumSize = CGSize()
+
+    fileprivate var label: String?
+    fileprivate var _labelSize: CGSize = CGSize()
+    fileprivate var _paragraphStyle: NSMutableParagraphStyle?
+    fileprivate var _drawAttributes = [NSAttributedString.Key : Any]()
+
+    public init(color: UIColor, font: UIFont, textColor: UIColor, insets: UIEdgeInsets)
+    {
+        super.init()
+
+        self.color = color
+        self.font = font
+        self.textColor = textColor
+        self.insets = insets
+
+        _paragraphStyle = NSParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle
+        _paragraphStyle?.alignment = .center
+    }
+
+    open override func offsetForDrawing(atPoint point: CGPoint) -> CGPoint
+    {
+        let size = self.size
+        var point = point
+        point.x -= size.width / 2.0
+        point.y -= size.height
+        return super.offsetForDrawing(atPoint: point)
+    }
+
+    open override func draw(context: CGContext, point: CGPoint)
+    {
+        guard let label = label else { return }
+
+        let offset = self.offsetForDrawing(atPoint: point)
+        let size = self.size
+
+        var rect = CGRect(
+            origin: CGPoint(
+                x: point.x + offset.x,
+                y: point.y + offset.y),
+            size: size)
+        rect.origin.x -= size.width / 2.0
+        rect.origin.y -= size.height
+
+        context.saveGState()
+
+        if let color = color
+        {
+            context.setFillColor(color.cgColor)
+            context.beginPath()
+            context.move(to: CGPoint(
+                x: rect.origin.x,
+                y: rect.origin.y))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x + rect.size.width,
+                y: rect.origin.y))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x + rect.size.width,
+                y: rect.origin.y + rect.size.height - arrowSize.height))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x + (rect.size.width + arrowSize.width) / 2.0,
+                y: rect.origin.y + rect.size.height - arrowSize.height))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x + rect.size.width / 2.0,
+                y: rect.origin.y + rect.size.height))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x + (rect.size.width - arrowSize.width) / 2.0,
+                y: rect.origin.y + rect.size.height - arrowSize.height))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x,
+                y: rect.origin.y + rect.size.height - arrowSize.height))
+            context.addLine(to: CGPoint(
+                x: rect.origin.x,
+                y: rect.origin.y))
+            context.fillPath()
+        }
+
+        rect.origin.y += self.insets.top
+        rect.size.height -= self.insets.top + self.insets.bottom
+
+        UIGraphicsPushContext(context)
+
+        label.draw(in: rect, withAttributes: _drawAttributes)
+
+        UIGraphicsPopContext()
+
+        context.restoreGState()
+    }
+
+    open override func refreshContent(entry: ChartDataEntry, highlight: Highlight)
+    {
+        setLabel(String(entry.y))
+    }
+
+    open func setLabel(_ newLabel: String)
+    {
+        label = newLabel
+
+        _drawAttributes.removeAll()
+        _drawAttributes[NSAttributedString.Key.font] = self.font
+        _drawAttributes[NSAttributedString.Key.paragraphStyle] = _paragraphStyle
+        _drawAttributes[NSAttributedString.Key.foregroundColor] = self.textColor
+
+        _labelSize = label?.size(withAttributes: _drawAttributes) ?? CGSize.zero
+
+        var size = CGSize()
+        size.width = _labelSize.width + self.insets.left + self.insets.right
+        size.height = _labelSize.height + self.insets.top + self.insets.bottom
+        size.width = max(minimumSize.width, size.width)
+        size.height = max(minimumSize.height, size.height)
+        self.size = size
     }
 }

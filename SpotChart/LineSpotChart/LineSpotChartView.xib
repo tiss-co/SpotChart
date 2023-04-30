@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,6 +14,7 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="TJY-Km-R7b"/>
                 <outlet property="contentainerView" destination="ndW-D4-aok" id="gy9-4B-TCn"/>
                 <outlet property="heightTableViewConstraint" destination="20y-5h-uvU" id="yOp-cI-km3"/>
+                <outlet property="leadingLegendConstraint" destination="YPA-Bk-B3h" id="MB1-vW-PV1"/>
                 <outlet property="leftAxisLabel" destination="Jyd-IB-yh7" id="CF6-G5-lEu"/>
                 <outlet property="leftAxisleadingConstraint" destination="DeZ-VI-xab" id="iPl-8j-oxy"/>
                 <outlet property="lineChartView" destination="5ZL-Ct-JxL" id="bfs-bK-m4a"/>
@@ -22,6 +23,7 @@
                 <outlet property="rightAxisLabel" destination="S40-IX-I9r" id="RfW-vX-NO7"/>
                 <outlet property="rightAxisTrailingConstraint" destination="ATS-kR-vYb" id="zT4-pA-PIY"/>
                 <outlet property="rightResetZoomConstraint" destination="ozd-Ds-aN4" id="qJ3-NI-oeL"/>
+                <outlet property="selectMetersButton" destination="253-Km-3d0" id="uyZ-IP-MnS"/>
                 <outlet property="tableView" destination="yWS-aJ-zac" id="Eep-1u-WnX"/>
                 <outlet property="tooltipRightConstraint" destination="Wd1-Xv-WEp" id="M1b-V2-jbJ"/>
                 <outlet property="tooltipStackView" destination="ShT-vJ-Heo" id="YL5-th-Vj5"/>
@@ -92,18 +94,35 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yWS-aJ-zac">
-                            <rect key="frame" x="0.0" y="310" width="414" height="90"/>
+                            <rect key="frame" x="105" y="310" width="309" height="90"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="90" id="20y-5h-uvU"/>
                             </constraints>
                             <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="253-Km-3d0">
+                            <rect key="frame" x="0.0" y="315" width="110" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="110" id="2fC-f3-JOh"/>
+                                <constraint firstAttribute="height" constant="35" id="VYQ-fv-6xC"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Select Meters" image="chevron.down" catalog="system">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
+                            <connections>
+                                <action selector="selectMetersPressed:" destination="-1" eventType="touchUpInside" id="NGL-pw-PaZ"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="253-Km-3d0" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="3HU-a2-crL"/>
                         <constraint firstAttribute="bottom" secondItem="yWS-aJ-zac" secondAttribute="bottom" id="5Vh-73-PhT"/>
                         <constraint firstItem="Jyd-IB-yh7" firstAttribute="centerY" secondItem="5ZL-Ct-JxL" secondAttribute="centerY" id="5yU-SM-fVv"/>
+                        <constraint firstItem="253-Km-3d0" firstAttribute="top" secondItem="5ZL-Ct-JxL" secondAttribute="bottom" constant="15" id="6nT-gj-lTl"/>
                         <constraint firstAttribute="trailing" secondItem="S40-IX-I9r" secondAttribute="trailing" id="ATS-kR-vYb"/>
                         <constraint firstItem="Jyd-IB-yh7" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="DeZ-VI-xab"/>
                         <constraint firstAttribute="trailing" secondItem="5ZL-Ct-JxL" secondAttribute="trailing" constant="18" id="Eby-sa-b8w"/>
@@ -111,7 +130,7 @@
                         <constraint firstItem="yWS-aJ-zac" firstAttribute="firstBaseline" secondItem="5ZL-Ct-JxL" secondAttribute="baseline" constant="10" id="Qdf-Qn-w2Z"/>
                         <constraint firstAttribute="trailing" secondItem="yWS-aJ-zac" secondAttribute="trailing" id="TOe-cB-mUy"/>
                         <constraint firstItem="S40-IX-I9r" firstAttribute="centerY" secondItem="5ZL-Ct-JxL" secondAttribute="centerY" id="Y5c-kt-YJw"/>
-                        <constraint firstItem="yWS-aJ-zac" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" id="fJ0-et-HRy"/>
+                        <constraint firstItem="yWS-aJ-zac" firstAttribute="leading" secondItem="ndW-D4-aok" secondAttribute="leading" constant="105" id="YPA-Bk-B3h"/>
                         <constraint firstItem="5ZL-Ct-JxL" firstAttribute="top" secondItem="ndW-D4-aok" secondAttribute="top" id="paV-u6-5na"/>
                     </constraints>
                 </view>
@@ -129,7 +148,11 @@
         </view>
     </objects>
     <resources>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="magnifyingglass.circle" catalog="system" width="128" height="123"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
