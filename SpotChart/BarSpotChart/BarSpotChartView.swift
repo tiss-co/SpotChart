@@ -23,12 +23,35 @@ public class BarSpotChartView: UIView {
     @IBOutlet weak var tooltipStackView: UIStackView!
     @IBOutlet weak var tooltipRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tooltipWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var selectMetersButton: UIButton!
+    @IBOutlet weak var leadingLegendConstraint: NSLayoutConstraint!
     
     public var containerBackgroundColor: UIColor = .systemGroupedBackground {
         didSet {
             self.contentView.backgroundColor = containerBackgroundColor
             self.contentainerView.backgroundColor = containerBackgroundColor
             self.legendCollectionView.backgroundColor = containerBackgroundColor
+        }
+    }
+    
+    public weak var delegate: SpotChartDelegate?
+    
+    public var isSelectMetersEnable: Bool = true {
+        didSet {
+            selectMetersButton.isHidden = !isSelectMetersEnable
+            leadingLegendConstraint.constant = isSelectMetersEnable ? 110 : 0
+        }
+    }
+    
+    public var selectMeterIcon = UIImage.init(systemName: "chevron.down") {
+        didSet {
+            selectMetersButton.setImage(selectMeterIcon, for: .normal)
+        }
+    }
+    
+    public var selectMetersFont = UIFont.systemFont(ofSize: 12) {
+        didSet {
+            selectMetersButton.titleLabel?.font = selectMetersFont
         }
     }
     
@@ -194,7 +217,14 @@ public class BarSpotChartView: UIView {
         self.tooltipStackView.backgroundColor = .clear
         self.rightAxisLabel.font = rightAxisTitleFont
         self.leftAxisLabel.font = leftAxisTitleFont
-        
+        setColorOfSelectMeter()
+    }
+    
+    public func setColorOfSelectMeter() {
+        selectMetersButton.layer.cornerRadius = selectMetersButton.frame.height / 2
+        selectMetersButton.titleLabel?.font = selectMetersFont
+        selectMetersButton.backgroundColor = .tertiarySystemGroupedBackground
+        selectMetersButton.setTitleColor(.label, for: .normal)
     }
     
     public func setAxisTitle(leftTitle: String? = nil, rightTitle : String? = nil){
@@ -276,6 +306,10 @@ public class BarSpotChartView: UIView {
             index += 1
         }
         return dates
+    }
+    
+    @IBAction func selectMetersPressed(_ sender: Any) {
+        delegate?.selectMetersPressed()
     }
 }
 
