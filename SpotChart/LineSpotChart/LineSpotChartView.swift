@@ -552,7 +552,7 @@ extension LineSpotChartView {
         guard let data = lineModel.data.entries.filter { Int($0.x) == index }.first else { return }
         let value = data.y
         if lineModel.isRoundedValue || value > 99 {
-            let valueRounded = Int(value.rounded())
+            let valueRounded = Int(value.rounded(.toNearestOrAwayFromZero))
             valueLbl.text = String(valueRounded.thousandSeprate()!)
         }else{
             valueLbl.text = String(format: "%.2f",data.y)
